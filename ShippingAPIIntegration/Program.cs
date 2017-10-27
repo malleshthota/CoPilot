@@ -15,10 +15,19 @@ namespace ShippingAPIIntegration
             //returns dsShipment with default values
             ds = ws.GetNewShipment();
 
-            ds.Shipment[0].LocationID = 11223344;
-            ds.Shipment[0].ControlStation = "LAX";
-            ds.Shipment[0].AddressID = 12345;
-            ds.Shipment[0].TariffHeaderID = 98765;
+            /* Test Data for mail trigger
+             ds.Shipment[0].LocationID = 11223344;
+             ds.Shipment[0].ControlStation = "LAX";
+             ds.Shipment[0].AddressID = 12345;
+             ds.Shipment[0].TariffHeaderID = 98765;
+             * Test Data End  */
+            #region - Shipment Constant Details - Don't Modify - Start
+            ds.Shipment[0].LocationID = 12884574;
+            ds.Shipment[0].ControlStation = "GOP";
+            ds.Shipment[0].AddressID = 80149;
+            ds.Shipment[0].TariffHeaderID = 21942;
+            #endregion - Shipment Constant Details - Don't Modify - End 
+
             ds.Shipment[0].IsScreeningConsent = "Y";
             ds.Shipment[0].PayType = "T";
             ds.Shipment[0].Service = "EC";
@@ -35,10 +44,15 @@ namespace ShippingAPIIntegration
             ds.Shipment[0].EmailBOL = "rasool@ufe2.com";
             ds.Shipment[0].COD = 0;
             ds.Shipment[0].DeclaredValue = 0;
+            ds.Shipment[0].DebrisRemoval = false; // Set to false if not exists 
+            ds.Shipment[0].Hazmat = false; // Set to false if not exists 
+            ds.Shipment[0].HazmatPhone = string.Empty;// Set to Empty String if not exists
+            ds.Shipment[0].AirtrakQuoteNo = 0; //should be defaulted to the integer value 0
+
 
 
             //populate shipper information;
-            ds.Shipper[0].Name = "US FURNISHINGS EXPRESS INC";            
+            ds.Shipper[0].Name = "US FURNISHINGS EXPRESS INC";
             ds.Shipper[0].Address1 = "5125 SCHAEFER AVE";
             ds.Shipper[0].Address2 = "STE 104";
             ds.Shipper[0].City = "CHINO";
@@ -121,7 +135,7 @@ namespace ShippingAPIIntegration
             ds2.Void[0].ProNumber = res.dsResult.Shipment[0].ProNumber.ToString(); //"062002488";
             //void the shipment 
             newrest.PilotShipmentResult res2 = ws.Void(ds2);
-            if (!res2.IsError && res2.Message== "Shipment Void Success")
+            if (!res2.IsError && res2.Message == "Shipment Void Success")
             {
                 Console.WriteLine("Shipment Void Success");
             }
