@@ -76,6 +76,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -128,6 +129,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Web References\TestPilotServiceref\Shipment.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\logo_2010_3.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
