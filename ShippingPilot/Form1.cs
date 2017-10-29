@@ -35,6 +35,13 @@ namespace ShippingPilot
                     MessageBox.Show("OOOPS!!! First Select File to Submit !");
                     return;
                 }
+
+                if (txtFilePath.Text.Trim() == "")
+                {
+                    MessageBox.Show("OOOPS!!! First Select Response file Path !");
+                    return;
+                }
+
                 DialogResult res = MessageBox.Show("Are you Sure you want to Submit ?", "Ready To Submit!", MessageBoxButtons.YesNo);
                 if (res.Equals(DialogResult.Yes))
                 {
@@ -67,6 +74,9 @@ namespace ShippingPilot
                     }
                     lblInfo.Text = "Request Submitted Succesfully.";
                     ExportToExcel();
+                    txtFilePath.Text = "";
+                    txtResponsePath.Text = "";
+                    btnBrowse.Enabled = true;
                 }
             }
             catch (Exception ex)
@@ -74,13 +84,18 @@ namespace ShippingPilot
                 lblInfo.Text = "Exception while submitting!";
                 Remarks += $"BtnSubmit - {ex}";
             }
+            finally
+            {
+                btnBrowse.Enabled = true;
+            }
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
             lblUserName.Text = "Welcome Jia Guo";
             lblDateTime.Text = DateTime.Now.DayOfWeek.ToString() + " , " + DateTime.Now.ToShortDateString();
-            lblInfo.Text = "Browse File to Submit";
+            lblInfo.Text = "Browse File to Submit & Select Response File Path";
+            openFileDialog1.Filter = "Excel Files|*.xls;*.xlsx;*.xlsm;*.csv";
         }
 
         private void btnBrowse_Click(object sender, EventArgs e)
@@ -89,14 +104,12 @@ namespace ShippingPilot
             try
             {
                 int size = -1;
-                openFileDialog1.Filter = "Excel Files|*.xls;*.xlsx;*.xlsm;*.csv";
+
                 DialogResult result = openFileDialog1.ShowDialog(); // Show the dialog.
                 if (result == DialogResult.OK) // Test result.
                 {
                     fileName = openFileDialog1.FileName;
                     txtFilePath.Text = openFileDialog1.FileName;
-                    btnSubmit.Enabled = true;
-                    lblInfo.Text = "Click on Submit";
                 }
             }
             catch (Exception Ex)
@@ -106,13 +119,35 @@ namespace ShippingPilot
             }
         }
 
+        private void btnResponse_Click(object sender, EventArgs e)
+        {
+            DialogResult result = openFileDialog1.ShowDialog(); // Show the dialog.
+            if (result == DialogResult.OK) // Test result.
+            {
+                txtResponsePath.Text = openFileDialog1.FileName;
+                btnSubmit.Enabled = true;
+                lblInfo.Text = "Click on Submit";
+            }
+            var FileExtensin = Path.GetExtension(openFileDialog1.FileName);
+            if (FileExtensin == "xlsx" || FileExtensin == ".xls")
+            {
+                txtResponsePath.Text = "";
+                MessageBox.Show(@"Please Select Response File. Ex:: C:\PilotResponse\abc.xlsx");
+            }
+            if (!File.Exists(openFileDialog1.FileName) && txtResponsePath.Text != "")
+            {
+                txtResponsePath.Text = "";
+                MessageBox.Show("File Not Exists in given location");
+            }
+        }
+
         public DataTable ReadExcel()
         {
             string conn = string.Empty;
             DataTable dtexcel = new DataTable();
 
-            //if (FileExtensin == "xlsx" || FileExtensin == ".xls" || FileExtensin == "xlsm")
-            //    conn = @"provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + fileName + ";Extended Properties='Excel 8.0;HRD=Yes;IMEX=1';"; //for below excel 2007  
+            //if (fileextensin == "xlsx" || fileextensin == ".xls" || fileextensin == "xlsm")
+            //conn = @"provider=microsoft.jet.oledb.4.0;data source=" + fileName + ";extended properties='excel 8.0;hrd=yes;imex=1';"; //for below excel 2007  
             //else
             conn = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + fileName + ";Extended Properties='Excel 12.0;HDR=NO';"; //for above excel 2007  
             using (OleDbConnection con = new OleDbConnection(conn))
@@ -269,6 +304,7 @@ namespace ShippingPilot
                 }
                 else
                 {
+                    _IsVoid = false;
                     Console.WriteLine("Shipment void Failed !.");
                     Remarks += $" ; {VoidResp.Message}";
                 }
@@ -304,12 +340,13 @@ namespace ShippingPilot
 
         public void ExportToExcel()
         {
-            DataSet ds = new DataSet("Organization");
+            DataSet ds = new DataSet("PilotResponse");
             ds.Tables.Add(table);
 
             //Creae an Excel application instance
             Microsoft.Office.Interop.Excel.Application excelApp = new Microsoft.Office.Interop.Excel.Application();
 
+            /*           
             //Create an Excel workbook instance and open it from the predefined location
             string ImportExcelPath = @"F:\PilotResponse";
             if (!Directory.Exists(@"C:"))
@@ -319,18 +356,17 @@ namespace ShippingPilot
             if (!Directory.Exists(ImportExcelPath))
                 Directory.CreateDirectory(ImportExcelPath);
 
-            string ImportExcelFileName = $"PilotResponse_{DateTime.Now.ToString().Replace("-", "").Replace(":", "").Replace(" ", "")}.xlsx";
+            string ImportExcelFileName = $"PilotResponse_{DateTime.Now.ToString().Replace("-", "").Replace(":", "").Replace(" ", "")}.xls";
             string FilePath = $@"{ImportExcelPath}\{ImportExcelFileName}";
             File.Create(FilePath);
-            FileIOPermission f2 = new FileIOPermission(FileIOPermissionAccess.Write, FilePath);
-
-            Microsoft.Office.Interop.Excel.Workbook excelWorkBook = excelApp.Workbooks.Open(FilePath);
+            */
+            Microsoft.Office.Interop.Excel.Workbook excelWorkBook = excelApp.Workbooks.Open(txtResponsePath.Text);
 
             foreach (DataTable table in ds.Tables)
             {
                 //Add a new worksheet to workbook with the Datatable name
                 Microsoft.Office.Interop.Excel.Worksheet excelWorkSheet = excelWorkBook.Sheets.Add();
-                excelWorkSheet.Name = table.TableName;
+                excelWorkSheet.Name = $"Pilot Response_{DateTime.Now.ToString().Replace("-", "").Replace(":", "").Replace(" ", "")}";
 
                 for (int i = 1; i < table.Columns.Count + 1; i++)
                 {

@@ -38,6 +38,10 @@
             this.lblUserName = new System.Windows.Forms.Label();
             this.lblDateTime = new System.Windows.Forms.Label();
             this.lblInfo = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.txtResponsePath = new System.Windows.Forms.TextBox();
+            this.btnResponse = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -63,7 +67,7 @@
             this.btnSubmit.Enabled = false;
             this.btnSubmit.Font = new System.Drawing.Font("Verdana", 9.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSubmit.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.btnSubmit.Location = new System.Drawing.Point(141, 215);
+            this.btnSubmit.Location = new System.Drawing.Point(128, 281);
             this.btnSubmit.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnSubmit.Name = "btnSubmit";
             this.btnSubmit.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
@@ -91,7 +95,7 @@
             this.btnBrowse.Location = new System.Drawing.Point(457, 133);
             this.btnBrowse.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnBrowse.Name = "btnBrowse";
-            this.btnBrowse.Size = new System.Drawing.Size(137, 27);
+            this.btnBrowse.Size = new System.Drawing.Size(137, 22);
             this.btnBrowse.TabIndex = 3;
             this.btnBrowse.Text = "Browse";
             this.btnBrowse.UseVisualStyleBackColor = false;
@@ -137,18 +141,63 @@
             this.lblInfo.AutoSize = true;
             this.lblInfo.Font = new System.Drawing.Font("Verdana", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblInfo.ForeColor = System.Drawing.Color.Navy;
-            this.lblInfo.Location = new System.Drawing.Point(138, 182);
+            this.lblInfo.Location = new System.Drawing.Point(125, 248);
             this.lblInfo.Name = "lblInfo";
             this.lblInfo.Size = new System.Drawing.Size(42, 18);
             this.lblInfo.TabIndex = 8;
             this.lblInfo.Text = "Info";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(-3, 181);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(104, 14);
+            this.label2.TabIndex = 9;
+            this.label2.Text = "Response Path";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // txtResponsePath
+            // 
+            this.txtResponsePath.ForeColor = System.Drawing.Color.Blue;
+            this.txtResponsePath.Location = new System.Drawing.Point(107, 179);
+            this.txtResponsePath.Name = "txtResponsePath";
+            this.txtResponsePath.Size = new System.Drawing.Size(342, 22);
+            this.txtResponsePath.TabIndex = 10;
+            // 
+            // btnResponse
+            // 
+            this.btnResponse.BackColor = System.Drawing.Color.Orange;
+            this.btnResponse.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.btnResponse.Location = new System.Drawing.Point(457, 177);
+            this.btnResponse.Name = "btnResponse";
+            this.btnResponse.Size = new System.Drawing.Size(137, 24);
+            this.btnResponse.TabIndex = 11;
+            this.btnResponse.Text = "Browse";
+            this.btnResponse.UseVisualStyleBackColor = false;
+            this.btnResponse.Click += new System.EventHandler(this.btnResponse_Click);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.ForeColor = System.Drawing.Color.Red;
+            this.label3.Location = new System.Drawing.Point(107, 208);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(310, 12);
+            this.label3.TabIndex = 12;
+            this.label3.Text = "*Select Response File. Ex:: C:\\PilotResponse\\abc.xlsx";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.LightGray;
-            this.ClientSize = new System.Drawing.Size(603, 329);
+            this.ClientSize = new System.Drawing.Size(638, 369);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.btnResponse);
+            this.Controls.Add(this.txtResponsePath);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.lblInfo);
             this.Controls.Add(this.lblDateTime);
             this.Controls.Add(this.lblUserName);
@@ -180,6 +229,10 @@
         private System.Windows.Forms.Label lblUserName;
         private System.Windows.Forms.Label lblDateTime;
         private System.Windows.Forms.Label lblInfo;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox txtResponsePath;
+        private System.Windows.Forms.Button btnResponse;
+        private System.Windows.Forms.Label label3;
     }
 }
 
