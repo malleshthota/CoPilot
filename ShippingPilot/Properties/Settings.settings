@@ -5,5 +5,8 @@
     <Setting Name="ShippingPilot_TestPilotServiceref_ShipmentService" Type="(Web Service URL)" Scope="Application">
       <Value Profile="(Default)">http://ws3.pilotdelivers.com/webservice/wsshipmentsdev/Shipment.asmx</Value>
     </Setting>
+    <Setting Name="ShippingPilot_CoPilotProd_ShipmentService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://ws3.pilotdelivers.com/webservice/wsshipments/Shipment.asmx</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

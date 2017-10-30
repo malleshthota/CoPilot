@@ -60,6 +60,11 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Web References\CoPilotProd\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
     <Compile Include="Web References\TestPilotServiceref\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -88,6 +93,22 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Web References\CoPilotProd\dsShipment.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\CoPilotProd\dsShipment.xsd" />
+    <None Include="Web References\CoPilotProd\dsVoid.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\CoPilotProd\dsVoid.xsd" />
+    <None Include="Web References\CoPilotProd\PilotShipmentResult.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\CoPilotProd\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\CoPilotProd\Shipment.wsdl" />
     <None Include="Web References\TestPilotServiceref\dsShipment.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
@@ -115,6 +136,17 @@
     <WebReferences Include="Web References\" />
   </ItemGroup>
   <ItemGroup>
+    <WebReferenceUrl Include="http://ws3.pilotdelivers.com/webservice/wsshipments/Shipment.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\CoPilotProd\</RelPath>
+      <UpdateFromURL>http://ws3.pilotdelivers.com/webservice/wsshipments/Shipment.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>ShippingPilot_CoPilotProd_ShipmentService</CachedSettingsPropName>
+    </WebReferenceUrl>
     <WebReferenceUrl Include="http://ws3.pilotdelivers.com/webservice/wsshipmentsdev/Shipment.asmx">
       <UrlBehavior>Dynamic</UrlBehavior>
       <RelPath>Web References\TestPilotServiceref\</RelPath>
@@ -132,6 +164,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\logo_2010_3.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Web References\CoPilotProd\Shipment.disco" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -32,5 +32,15 @@ namespace ShippingPilot.Properties {
                 return ((string)(this["ShippingPilot_TestPilotServiceref_ShipmentService"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://ws3.pilotdelivers.com/webservice/wsshipments/Shipment.asmx")]
+        public string ShippingPilot_CoPilotProd_ShipmentService {
+            get {
+                return ((string)(this["ShippingPilot_CoPilotProd_ShipmentService"]));
+            }
+        }
     }
 }

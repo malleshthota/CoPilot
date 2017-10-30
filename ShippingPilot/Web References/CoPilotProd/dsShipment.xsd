@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns="http://tempuri.org/dsShipment.xsd" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:mstns="http://tempuri.org/dsShipment.xsd" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://tempuri.org/dsShipment.xsd" id="dsShipment" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element msdata:IsDataSet="true" msdata:UseCurrentLocale="true" name="dsShipment">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Shipment">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element minOccurs="0" default="0" name="QuoteID" type="xs:int" />
+              <xs:element minOccurs="0" default="0" name="LocationID" type="xs:int" />
+              <xs:element default="false" name="TransportByAir" type="xs:boolean" />
+              <xs:element minOccurs="0" name="IATA_Classifications" type="xs:int" />
+              <xs:element minOccurs="0" name="PackingContainers" type="xs:int" />
+              <xs:element minOccurs="0" default="0" name="DeclaredValue" type="xs:double" />
+              <xs:element minOccurs="0" default="0" name="COD" type="xs:double" />
+              <xs:element minOccurs="0" name="TariffID" type="xs:int" />
+              <xs:element minOccurs="0" name="TariffName" type="xs:string" />
+              <xs:element minOccurs="0" name="TariffCode" type="xs:string" />
+              <xs:element minOccurs="0" name="Notes" type="xs:string" />
+              <xs:element minOccurs="0" name="Service" type="xs:string" />
+              <xs:element minOccurs="0" name="AirtrakServiceCode" type="xs:string" />
+              <xs:element minOccurs="0" name="TariffExtension" type="xs:string" />
+              <xs:element minOccurs="0" name="QuoteDate" type="xs:dateTime" />
+              <xs:element minOccurs="0" default="false" name="HoldAtAirport" type="xs:boolean" />
+              <xs:element minOccurs="0" name="ControlStation" type="xs:string" />
+              <xs:element minOccurs="0" default="" name="ProNumber" type="xs:string" />
+              <xs:element minOccurs="0" name="ConsigneeAttn" type="xs:string" />
+              <xs:element minOccurs="0" name="ThirdPartyAuth" type="xs:string" />
+              <xs:element minOccurs="0" name="ShipperRef" type="xs:string" />
+              <xs:element minOccurs="0" name="ConsigneeRef" type="xs:string" />
+              <xs:element minOccurs="0" name="DeliveryDate" type="xs:string" />
+              <xs:element minOccurs="0" default="0" name="AmountDueConsignee" type="xs:decimal" />
+              <xs:element minOccurs="0" name="ShipDate" type="xs:dateTime" />
+              <xs:element minOccurs="0" name="OverSized" type="xs:boolean" />
+              <xs:element minOccurs="0" name="PayType" type="xs:string" />
+              <xs:element minOccurs="0" default="false" name="POD" type="xs:boolean" />
+              <xs:element minOccurs="0" default="false" name="SatDelivery" type="xs:boolean" />
+              <xs:element minOccurs="0" name="SpecialInstructions" type="xs:string" />
+              <xs:element minOccurs="0" name="ReadyTime" type="xs:dateTime" />
+              <xs:element minOccurs="0" name="CloseTime" type="xs:dateTime" />
+              <xs:element minOccurs="0" name="HomeDelivery" type="xs:string" />
+              <xs:element minOccurs="0" default="0" name="ShipmentID" type="xs:int" />
+              <xs:element minOccurs="0" name="LockDate" type="xs:dateTime" />
+              <xs:element minOccurs="0" name="LockUser" type="xs:int" />
+              <xs:element minOccurs="0" name="LastUpdate" type="xs:dateTime" />
+              <xs:element minOccurs="0" name="AddressID" type="xs:int" />
+              <xs:element minOccurs="0" name="Platinum" type="xs:boolean" />
+              <xs:element minOccurs="0" default="false" name="IsShipper" type="xs:boolean" />
+              <xs:element minOccurs="0" default="false" name="GBL" type="xs:boolean" />
+              <xs:element minOccurs="0" default="false" name="IsInsurance" type="xs:boolean" />
+              <xs:element minOccurs="0" name="Condition" type="xs:string" />
+              <xs:element minOccurs="0" name="Packaging" type="xs:string" />
+              <xs:element minOccurs="0" default="0" name="TariffHeaderID" type="xs:int" />
+              <xs:element minOccurs="0" name="ProductName" type="xs:string" />
+              <xs:element minOccurs="0" name="ProductDescription" type="xs:string" />
+              <xs:element minOccurs="0" name="DebrisRemoval" type="xs:boolean" />
+              <xs:element minOccurs="0" name="IsScreeningConsent" type="xs:string" />
+              <xs:element minOccurs="0" default="" name="EmailBOL" type="xs:string" />
+              <xs:element minOccurs="0" name="ServiceName" type="xs:string" />
+              <xs:element minOccurs="0" name="Hazmat" type="xs:boolean" />
+              <xs:element minOccurs="0" name="HazmatNumber" type="xs:string" />
+              <xs:element minOccurs="0" name="HazmatClass" type="xs:string" />
+              <xs:element minOccurs="0" name="HazmatPhone" type="xs:string" />
+              <xs:element minOccurs="0" default="false" name="IsDistribution" type="xs:boolean" />
+              <xs:element minOccurs="0" name="DeliveryStartTime" type="xs:string" />
+              <xs:element minOccurs="0" default="0" name="AirtrakQuoteNo" type="xs:long" />
+              <xs:element minOccurs="0" maxOccurs="unbounded" name="Shipper">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="0" default="0" name="ShipmentID" type="xs:int" />
+                    <xs:element minOccurs="0" name="Name" type="xs:string" />
+                    <xs:element minOccurs="0" default="" name="Address1" type="xs:string" />
+                    <xs:element minOccurs="0" default="" name="Address2" type="xs:string" />
+                    <xs:element minOccurs="0" default="" name="Address3" type="xs:string" />
+                    <xs:element minOccurs="0" name="City" type="xs:string" />
+                    <xs:element minOccurs="0" name="State" type="xs:string" />
+                    <xs:element minOccurs="0" name="Zipcode" type="xs:string" />
+                    <xs:element minOccurs="0" name="Country" type="xs:string" />
+                    <xs:element minOccurs="0" default="" name="Airport" type="xs:string" />
+                    <xs:element minOccurs="0" name="Owner" type="xs:string" />
+                    <xs:element minOccurs="0" default="false" name="Attempted" type="xs:boolean" />
+                    <xs:element minOccurs="0" default="false" name="PrivateRes" type="xs:boolean" />
+                    <xs:element minOccurs="0" default="false" name="Hotel" type="xs:boolean" />
+                    <xs:element minOccurs="0" default="false" name="Inside" type="xs:boolean" />
+                    <xs:element minOccurs="0" default="false" name="Liftgate" type="xs:boolean" />
+                    <xs:element minOccurs="0" default="0" name="TwoManHours" type="xs:double" />
+                    <xs:element minOccurs="0" default="0" name="WaitTimeHours" type="xs:double" />
+                    <xs:element minOccurs="0" name="Special" type="xs:string" />
+                    <xs:element minOccurs="0" name="DedicatedVehicle" type="xs:string" />
+                    <xs:element minOccurs="0" name="Miles" type="xs:int" />
+                    <xs:element minOccurs="0" name="Canadian" type="xs:boolean" />
+                    <xs:element minOccurs="0" name="ServiceCode" type="xs:string" />
+                    <xs:element minOccurs="0" name="Convention" type="xs:boolean" />
+                    <xs:element minOccurs="0" name="Contact" type="xs:string" />
+                    <xs:element minOccurs="0" name="Phone" type="xs:string" />
+                    <xs:element minOccurs="0" name="Extension" type="xs:string" />
+                    <xs:element minOccurs="0" name="Email" type="xs:string" />
+                    <xs:element minOccurs="0" default="false" name="SendEmail" type="xs:boolean" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element minOccurs="0" maxOccurs="unbounded" name="Consignee">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="0" default="0" name="ShipmentID" type="xs:int" />
+                    <xs:element minOccurs="0" name="Name" type="xs:string" />
+                    <xs:element minOccurs="0" default="" name="Address1" type="xs:string" />
+                    <xs:element minOccurs="0" default="" name="Address2" type="xs:string" />
+                    <xs:element minOccurs="0" default="" name="Address3" type="xs:string" />
+                    <xs:element minOccurs="0" name="City" type="xs:string" />
+                    <xs:element minOccurs="0" name="State" type="xs:string" />
+                    <xs:element minOccurs="0" name="Zipcode" type="xs:string" />
+                    <xs:element minOccurs="0" name="Country" type="xs:string" />
+                    <xs:element minOccurs="0" default="" name="Airport" type="xs:string" />
+                    <xs:element minOccurs="0" name="Owner" type="xs:string" />
+                    <xs:element minOccurs="0" default="false" name="Attempted" type="xs:boolean" />
+                    <xs:element minOccurs="0" default="false" name="PrivateRes" type="xs:boolean" />
+                    <xs:element minOccurs="0" default="false" name="Hotel" type="xs:boolean" />
+                    <xs:element minOccurs="0" default="false" name="Inside" type="xs:boolean" />
+                    <xs:element minOccurs="0" default="false" name="Liftgate" type="xs:boolean" />
+                    <xs:element minOccurs="0" default="0" name="TwoManHours" type="xs:double" />
+                    <xs:element minOccurs="0" default="0" name="WaitTimeHours" type="xs:double" />
+                    <xs:element minOccurs="0" name="Special" type="xs:string" />
+                    <xs:element minOccurs="0" name="DedicatedVehicle" type="xs:string" />
+                    <xs:element minOccurs="0" name="Miles" type="xs:int" />
+                    <xs:element minOccurs="0" name="Canadian" type="xs:boolean" />
+                    <xs:element minOccurs="0" name="ServiceCode" type="xs:string" />
+                    <xs:element minOccurs="0" name="Convention" type="xs:boolean" />
+                    <xs:element minOccurs="0" name="Contact" type="xs:string" />
+                    <xs:element minOccurs="0" name="Phone" type="xs:string" />
+                    <xs:element minOccurs="0" name="Extension" type="xs:string" />
+                    <xs:element minOccurs="0" name="Email" type="xs:string" />
+                    <xs:element minOccurs="0" default="false" name="SendEmail" type="xs:boolean" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element minOccurs="0" maxOccurs="unbounded" name="ThirdParty">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="0" default="0" name="ShipmentID" type="xs:int" />
+                    <xs:element minOccurs="0" name="Name" type="xs:string" />
+                    <xs:element minOccurs="0" default="" name="Address1" type="xs:string" />
+                    <xs:element minOccurs="0" default="" name="Address2" type="xs:string" />
+                    <xs:element minOccurs="0" default="" name="Address3" type="xs:string" />
+                    <xs:element minOccurs="0" name="City" type="xs:string" />
+                    <xs:element minOccurs="0" name="State" type="xs:string" />
+                    <xs:element minOccurs="0" name="Zipcode" type="xs:string" />
+                    <xs:element minOccurs="0" name="Country" type="xs:string" />
+                    <xs:element minOccurs="0" name="Contact" type="xs:string" />
+                    <xs:element minOccurs="0" name="Phone" type="xs:string" />
+                    <xs:element minOccurs="0" name="Extension" type="xs:string" />
+                    <xs:element minOccurs="0" name="Email" type="xs:string" />
+                    <xs:element minOccurs="0" default="false" name="SendEmail" type="xs:boolean" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element minOccurs="0" maxOccurs="unbounded" name="LineItems">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="0" default="0" name="ShipmentID" type="xs:int" />
+                    <xs:element minOccurs="0" name="LineRow" type="xs:int" />
+                    <xs:element minOccurs="0" name="Pieces" type="xs:int" />
+                    <xs:element minOccurs="0" name="Weight" type="xs:int" />
+                    <xs:element minOccurs="0" name="Description" type="xs:string" />
+                    <xs:element minOccurs="0" name="Length" type="xs:int" />
+                    <xs:element minOccurs="0" name="Width" type="xs:int" />
+                    <xs:element minOccurs="0" name="Height" type="xs:int" />
+                    <xs:element minOccurs="0" default="0" name="Kilos" type="xs:int" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element minOccurs="0" maxOccurs="unbounded" name="Quote">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="0" default="0" name="ShipmentID" type="xs:int" />
+                    <xs:element minOccurs="0" name="Service" type="xs:string" />
+                    <xs:element minOccurs="0" default="0" name="DimWeight" type="xs:int" />
+                    <xs:element minOccurs="0" default="0" name="TotalQuote" type="xs:double" />
+                    <xs:element minOccurs="0" default="false" name="Oversized" type="xs:boolean" />
+                    <xs:element minOccurs="0" default="false" name="AbleToCalculate" type="xs:boolean" />
+                    <xs:element minOccurs="0" default="0" name="ChargeWeight" type="xs:int" />
+                    <xs:element minOccurs="0" default="false" name="Beyond" type="xs:boolean" />
+                    <xs:element default="" name="DisplayService" type="xs:string" />
+                    <xs:element minOccurs="0" default="0" name="TopLine" type="xs:double" />
+                    <xs:element minOccurs="0" default="false" name="UpgradeRequiredForServiceArea" type="xs:boolean" />
+                    <xs:element minOccurs="0" name="LinkForShipping" type="xs:string" />
+                    <xs:element minOccurs="0" maxOccurs="unbounded" name="Breakdown">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element minOccurs="0" default="0" name="ShipmentID" type="xs:int" />
+                          <xs:element minOccurs="0" name="ChargeCode" type="xs:int" />
+                          <xs:element minOccurs="0" name="Charge" type="xs:double" />
+                          <xs:element minOccurs="0" name="BillCodeName" type="xs:string" />
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element minOccurs="0" maxOccurs="unbounded" name="InternationalServices">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="0" default="0" name="ShipmentID" type="xs:int" />
+                    <xs:element minOccurs="0" name="ShipmentType" type="xs:string" />
+                    <xs:element minOccurs="0" name="Service" type="xs:string" />
+                    <xs:element minOccurs="0" name="Incoterms" type="xs:string" />
+                    <xs:element minOccurs="0" name="CustomsValue" type="xs:string" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element minOccurs="0" maxOccurs="unbounded" name="International">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="0" default="0" name="ShipmentID" type="xs:int" />
+                    <xs:element minOccurs="0" name="USPPI_EIN" type="xs:string" />
+                    <xs:element minOccurs="0" name="PartiesToTransaction" type="xs:boolean" />
+                    <xs:element minOccurs="0" name="IntermediateConsignee" type="xs:string" />
+                    <xs:element minOccurs="0" name="MethodOfTransportation" type="xs:string" />
+                    <xs:element minOccurs="0" name="ConsolidateOrDirect" type="xs:boolean" />
+                    <xs:element minOccurs="0" name="ShipmentReferenceNumber" type="xs:string" />
+                    <xs:element minOccurs="0" name="EntryNumber" type="xs:string" />
+                    <xs:element minOccurs="0" name="InBondCode" type="xs:string" />
+                    <xs:element minOccurs="0" name="RoutedExportTransaction" type="xs:boolean" />
+                    <xs:element minOccurs="0" name="LicenseNumber" type="xs:string" />
+                    <xs:element minOccurs="0" name="ECCN" type="xs:string" />
+                    <xs:element minOccurs="0" name="HazMat" type="xs:boolean" />
+                    <xs:element minOccurs="0" name="LicenseValue" type="xs:string" />
+                    <xs:element minOccurs="0" name="InBondCodeValue" type="xs:string" />
+                    <xs:element minOccurs="0" name="MethodOfTransportationValue" type="xs:string" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element minOccurs="0" maxOccurs="unbounded" name="OtherReferences">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="0" default="0" name="ShipmentID" type="xs:int" />
+                    <xs:element minOccurs="0" name="Reference" type="xs:string" />
+                    <xs:element minOccurs="0" name="ReferenceType" type="xs:string" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element minOccurs="0" maxOccurs="unbounded" name="ScheduleBLines">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="0" name="ScheduleBID" type="xs:int" />
+                    <xs:element minOccurs="0" default="0" name="ShipmentID" type="xs:int" />
+                    <xs:element minOccurs="0" default="0" name="ScheduleBLine" type="xs:int" />
+                    <xs:element minOccurs="0" name="DForM" type="xs:string" />
+                    <xs:element minOccurs="0" name="ScheduleBNumber" type="xs:string" />
+                    <xs:element minOccurs="0" name="Quantity" type="xs:string" />
+                    <xs:element minOccurs="0" name="Weight" type="xs:int" />
+                    <xs:element minOccurs="0" name="VinNumber" type="xs:string" />
+                    <xs:element minOccurs="0" default="0" name="DollarValue" type="xs:string" />
+                    <xs:element minOccurs="0" default="0" name="ScheduleBCode" type="xs:string" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element minOccurs="0" maxOccurs="unbounded" name="ShipmentCustomerInfo">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="0" name="User_Email" type="xs:string" />
+                    <xs:element minOccurs="0" default="" name="User_Name" type="xs:string" />
+                    <xs:element minOccurs="0" default="" name="User_Phone" type="xs:string" />
+                    <xs:element minOccurs="0" default="" name="Name" type="xs:string" />
+                    <xs:element minOccurs="0" default="" name="Address1" type="xs:string" />
+                    <xs:element minOccurs="0" default="" name="Address2" type="xs:string" />
+                    <xs:element minOccurs="0" default="" name="City" type="xs:string" />
+                    <xs:element minOccurs="0" default="" name="State" type="xs:string" />
+                    <xs:element minOccurs="0" default="" name="Zip" type="xs:string" />
+                    <xs:element minOccurs="0" default="" name="Country" type="xs:string" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

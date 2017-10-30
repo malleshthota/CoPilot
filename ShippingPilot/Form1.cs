@@ -19,83 +19,11 @@ namespace ShippingPilot
         bool _IsSaved = false, _IsVoid = false;
         string Remarks = "", ProNumber = "";
 
-        DataTable table = new DataTable();
+        DataTable table;
 
         public Form1()
         {
             InitializeComponent();
-        }
-
-        private void btnSubmit_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (txtFilePath.Text.Trim() == "")
-                {
-                    MessageBox.Show("OOOPS!!! First Select File to Submit !");
-                    return;
-                }
-
-                if (txtFilePath.Text.Trim() == "")
-                {
-                    MessageBox.Show("OOOPS!!! First Select Response file Path !");
-                    return;
-                }
-
-                DialogResult res = MessageBox.Show("Are you Sure you want to Submit ?", "Ready To Submit!", MessageBoxButtons.YesNo);
-                if (res.Equals(DialogResult.Yes))
-                {
-                    btnSubmit.Enabled = false;
-                    lblInfo.Text = "Please be patient while processing your request !!";
-                    DataTable ExcelData = ReadExcel();
-                    bool _IsFirstRow = true;
-                    foreach (DataRow dr in ExcelData.Rows)
-                    {
-                        if (_IsFirstRow)
-                        {
-                            _IsFirstRow = false;
-                            continue;
-                        }
-
-                        if (dr.ItemArray[22].ToString().Trim() == string.Empty)
-                            continue;
-
-                        if (dr.ItemArray[22].ToString().Trim() == "Pilot Freight Basic Delivery")
-                        {
-                            PilotOperations(dr);
-                        }
-                        else
-                        {
-                            _IsSaved = false;
-                            _IsVoid = false;
-                            Remarks = "Invalid Carrier";
-                            TableOperations(dr.ItemArray[0].ToString(), dr.ItemArray[1].ToString(), dr.ItemArray[25].ToString());
-                        }
-                    }
-                    lblInfo.Text = "Request Submitted Succesfully.";
-                    ExportToExcel();
-                    txtFilePath.Text = "";
-                    txtResponsePath.Text = "";
-                    btnBrowse.Enabled = true;
-                }
-            }
-            catch (Exception ex)
-            {
-                lblInfo.Text = "Exception while submitting!";
-                Remarks += $"BtnSubmit - {ex}";
-            }
-            finally
-            {
-                btnBrowse.Enabled = true;
-            }
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            lblUserName.Text = "Welcome Jia Guo";
-            lblDateTime.Text = DateTime.Now.DayOfWeek.ToString() + " , " + DateTime.Now.ToShortDateString();
-            lblInfo.Text = "Browse File to Submit & Select Response File Path";
-            openFileDialog1.Filter = "Excel Files|*.xls;*.xlsx;*.xlsm;*.csv";
         }
 
         private void btnBrowse_Click(object sender, EventArgs e)
@@ -141,6 +69,79 @@ namespace ShippingPilot
             }
         }
 
+        private void btnSubmit_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                table = new DataTable();
+                if (txtFilePath.Text.Trim() == "")
+                {
+                    MessageBox.Show("OOOPS!!! First Select File to Submit !");
+                    return;
+                }
+
+                if (txtFilePath.Text.Trim() == "")
+                {
+                    MessageBox.Show("OOOPS!!! First Select Response file Path !");
+                    return;
+                }
+
+                DialogResult res = MessageBox.Show("Are you Sure you want to Submit ?", "Ready To Submit!", MessageBoxButtons.YesNo);
+                if (res.Equals(DialogResult.Yes))
+                {
+                    btnSubmit.Enabled = false;
+                    lblInfo.Text = "Please be patient while processing your request !!";
+                    DataTable ExcelData = ReadExcel();
+                    bool _IsFirstRow = true;
+                    foreach (DataRow dr in ExcelData.Rows)
+                    {
+                        if (_IsFirstRow)
+                        {
+                            _IsFirstRow = false;
+                            continue;
+                        }
+
+                        if (dr.ItemArray[22].ToString().Trim() == string.Empty)
+                            continue;
+
+                        if (dr.ItemArray[22].ToString().Trim() == "Pilot Freight Basic Delivery")
+                        {
+                            PilotOperations(dr);
+                        }
+                        else
+                        {
+                            _IsSaved = false;
+                            _IsVoid = false;
+                            Remarks = "Invalid Carrier";
+                            TableOperations(dr.ItemArray[0].ToString(), dr.ItemArray[1].ToString(), dr.ItemArray[25].ToString());
+                        }
+                    }
+                    lblInfo.Text = "Request Submitted Succesfully.";
+                }
+            }
+            catch (Exception ex)
+            {
+                lblInfo.Text = "Exception while submitting!";
+                Remarks += $"BtnSubmit - {ex}";
+            }
+            finally
+            {
+                ExportToExcel();
+                txtFilePath.Text = "";
+                txtResponsePath.Text = "";
+                btnBrowse.Enabled = true;
+                btnBrowse.Enabled = true;
+            }
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            lblUserName.Text = "Welcome Jia Guo";
+            lblDateTime.Text = DateTime.Now.DayOfWeek.ToString() + " , " + DateTime.Now.ToShortDateString();
+            lblInfo.Text = "Browse File to Submit & Select Response File Path";
+            openFileDialog1.Filter = "Excel Files|*.xls;*.xlsx;*.xlsm;*.csv";
+        }
+
         public DataTable ReadExcel()
         {
             string conn = string.Empty;
@@ -169,6 +170,8 @@ namespace ShippingPilot
         {
             try
             {
+                //TestPilotServiceref  - For Testing
+                //CoPilotProd       - For Production
                 TestPilotServiceref.dsShipment ds;
                 TestPilotServiceref.ShipmentService ws = new TestPilotServiceref.ShipmentService();
                 //returns dsShipment with default values
@@ -187,20 +190,20 @@ namespace ShippingPilot
                 ds.Shipment[0].TariffHeaderID = 21942;
                 #endregion - Shipment Constant Details - Don't Modify - End 
 
-                ds.Shipment[0].IsScreeningConsent = ""; // Doubt
-                ds.Shipment[0].PayType = "";   // Doubt
+                ds.Shipment[0].IsScreeningConsent = "Yes"; // Doubt
+                ds.Shipment[0].PayType = "THIRD PARTY";   // Doubt
                 ds.Shipment[0].Service = "BASIC"; // Doubt
-                ds.Shipment[0].ProductName = "B";
+                ds.Shipment[0].ProductName = dr.ItemArray[16].ToString();
                 ds.Shipment[0].ProductDescription = dr.ItemArray[18].ToString(); // Item Description
                 ds.Shipment[0].SpecialInstructions = ""; // Doubt
-                ds.Shipment[0].ShipperRef = "";
-                ds.Shipment[0].ConsigneeRef = "conref987";
-                ds.Shipment[0].ConsigneeAttn = dr.ItemArray[6].ToString(); // Customer Phone Number
+                ds.Shipment[0].ShipperRef = dr.ItemArray[0].ToString();
+                ds.Shipment[0].ConsigneeRef = dr.ItemArray[0].ToString(); 
+                ds.Shipment[0].ConsigneeAttn = dr.ItemArray[4].ToString(); // Customer Phone Number
                 ds.Shipment[0].ThirdPartyAuth = "";
-                ds.Shipment[0].ShipDate = Convert.ToDateTime(dr.ItemArray[3]); // Ship By
-                ds.Shipment[0].ReadyTime = System.DateTime.Now; // Doubt
-                ds.Shipment[0].CloseTime = System.DateTime.Now; // Doubt
-                ds.Shipment[0].EmailBOL = ""; // Doubt
+                ds.Shipment[0].ShipDate = System.DateTime.Now;  // Ship By
+                ds.Shipment[0].ReadyTime = System.DateTime.Now; // Doubt  15:00
+                ds.Shipment[0].CloseTime = System.DateTime.Now; // Doubt  17:00
+                ds.Shipment[0].EmailBOL = "bols@ufe2.com"; // Doubt
                 ds.Shipment[0].COD = 0;
                 ds.Shipment[0].DeclaredValue = 0;
                 ds.Shipment[0].DebrisRemoval = false; // Set to false if not exists 
@@ -229,12 +232,12 @@ namespace ShippingPilot
                 #endregion Shipper Address will remain same for all the Orders - End
 
                 ds.Consignee[0].Name = dr.ItemArray[4].ToString(); // Customer Name
-                ds.Consignee[0].Address1 = dr.ItemArray[5].ToString();  // Customer Shipping Address
+                ds.Consignee[0].Address1 = dr.ItemArray[8].ToString() + " , " + dr.ItemArray[9].ToString();  // Customer Shipping Address
                 ds.Consignee[0].City = dr.ItemArray[10].ToString();     // City
                 ds.Consignee[0].State = dr.ItemArray[11].ToString();    // State
                 ds.Consignee[0].Zipcode = dr.ItemArray[12].ToString();  // Zip
-                ds.Consignee[0].Country = "US"; // Doubt
-                ds.Consignee[0].Contact = "";  // Doubt ??
+                ds.Consignee[0].Country = "UNITED STATES OF AMERICA"; // Doubt
+                ds.Consignee[0].Contact = dr.ItemArray[4].ToString();  // Doubt ??
                 ds.Consignee[0].Phone = dr.ItemArray[6].ToString(); // Customer Phone Number
                 ds.Consignee[0].Email = "";
                 ds.Consignee[0].PrivateRes = false;
@@ -253,7 +256,7 @@ namespace ShippingPilot
                 ds.ThirdParty[0].State = "CALIFORNIA";
                 ds.ThirdParty[0].Zipcode = "94066";
                 ds.ThirdParty[0].Country = "UNITED STATES OF AMERICA";
-                ds.ThirdParty[0].Contact = "877-549-0409";
+                ds.ThirdParty[0].Contact = "Account # 2983341";
                 ds.ThirdParty[0].Phone = "877-549-0409";
                 ds.ThirdParty[0].Email = string.Empty;
                 #endregion - Third Party Details Remain Same for all - End
@@ -324,13 +327,13 @@ namespace ShippingPilot
 
             if (table.Columns.Count == 0)
             {
-                table.Columns.Add("PO#", typeof(string));
-                table.Columns.Add("Order#", typeof(string));
+                table.Columns.Add("PO#", typeof(long));
+                table.Columns.Add("Order#", typeof(long));
                 table.Columns.Add("Carrier", typeof(string));
                 table.Columns.Add("Saved?", typeof(bool));
                 table.Columns.Add("Voided?", typeof(bool));
                 table.Columns.Add("Remarks", typeof(string));
-                table.Columns.Add("ProNumber", typeof(string));
+                table.Columns.Add("ProNumber", typeof(long));
             }
             table.Rows.Add(PO, Order, Carrier, _IsSaved, _IsVoid, Remarks, ProNumber);
 
