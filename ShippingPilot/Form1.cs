@@ -17,7 +17,7 @@ namespace ShippingPilot
     {
         string fileName = "";
         bool _IsSaved = false, _IsVoid = false;
-        string Remarks = "", ProNumber = "";
+        string Remarks = "", ProNumber = "", PrintPath = "";
 
         DataTable table;
 
@@ -192,12 +192,12 @@ namespace ShippingPilot
 
                 ds.Shipment[0].IsScreeningConsent = "Yes"; // Doubt
                 ds.Shipment[0].PayType = "THIRD PARTY";   // Doubt
-                ds.Shipment[0].Service = "BASIC"; // Doubt
+                ds.Shipment[0].Service = "BA"; // Doubt
                 ds.Shipment[0].ProductName = dr.ItemArray[16].ToString();
                 ds.Shipment[0].ProductDescription = dr.ItemArray[18].ToString(); // Item Description
                 ds.Shipment[0].SpecialInstructions = ""; // Doubt
                 ds.Shipment[0].ShipperRef = dr.ItemArray[0].ToString();
-                ds.Shipment[0].ConsigneeRef = dr.ItemArray[0].ToString(); 
+                ds.Shipment[0].ConsigneeRef = dr.ItemArray[0].ToString();
                 ds.Shipment[0].ConsigneeAttn = dr.ItemArray[4].ToString(); // Customer Phone Number
                 ds.Shipment[0].ThirdPartyAuth = "";
                 ds.Shipment[0].ShipDate = System.DateTime.Now;  // Ship By
@@ -334,11 +334,13 @@ namespace ShippingPilot
                 table.Columns.Add("Voided?", typeof(bool));
                 table.Columns.Add("Remarks", typeof(string));
                 table.Columns.Add("ProNumber", typeof(long));
+                table.Columns.Add("PrintPath", typeof(string));
             }
-            table.Rows.Add(PO, Order, Carrier, _IsSaved, _IsVoid, Remarks, ProNumber);
+            PrintPath = $@"https://copilot2.pilotdelivers.com/webairbill/reprint.aspx?section=ship&subsection=reprint&PrintWhat=Pro&ShipmentID={ProNumber}&ShipperCountry=US&ConsigneeCountry=US";
+            table.Rows.Add(PO, Order, Carrier, _IsSaved, _IsVoid, Remarks, ProNumber, PrintPath);
 
             _IsSaved = _IsVoid = false;
-            Remarks = ProNumber = string.Empty;
+            Remarks = ProNumber = PrintPath = string.Empty;
         }
 
         public void ExportToExcel()
