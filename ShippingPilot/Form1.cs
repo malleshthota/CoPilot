@@ -18,6 +18,7 @@ namespace ShippingPilot
         string fileName = "";
         bool _IsSaved = false, _IsVoid = false;
         string Remarks = "", ProNumber = "", PrintPath = "";
+        DataTable dtLineItemData = null;
 
         DataTable table;
 
@@ -31,8 +32,6 @@ namespace ShippingPilot
             lblInfo.Text = "";
             try
             {
-                int size = -1;
-
                 DialogResult result = openFileDialog1.ShowDialog(); // Show the dialog.
                 if (result == DialogResult.OK) // Test result.
                 {
@@ -76,7 +75,13 @@ namespace ShippingPilot
                 table = new DataTable();
                 if (txtFilePath.Text.Trim() == "")
                 {
-                    MessageBox.Show("OOOPS!!! First Select File to Submit !");
+                    MessageBox.Show("OOOPS!!! First Select Pilot File to Submit !");
+                    return;
+                }
+
+                if (txtLineItem.Text.Trim() == "")
+                {
+                    MessageBox.Show("OOOPS!!! First Select Line Item file Path !");
                     return;
                 }
 
@@ -90,10 +95,15 @@ namespace ShippingPilot
                 if (res.Equals(DialogResult.Yes))
                 {
                     btnSubmit.Enabled = false;
+                    DataTable dtPilotExcelData = ReadPilotExcel();
+                    dtLineItemData = new DataTable();
+                    dtLineItemData = ReadLineItemExcel();
+                    if (dtPilotExcelData == null || dtLineItemData == null)
+                        return;
+
                     lblInfo.Text = "Please be patient while processing your request !!";
-                    DataTable ExcelData = ReadExcel();
                     bool _IsFirstRow = true;
-                    foreach (DataRow dr in ExcelData.Rows)
+                    foreach (DataRow dr in dtPilotExcelData.Rows)
                     {
                         if (_IsFirstRow)
                         {
@@ -128,8 +138,7 @@ namespace ShippingPilot
             {
                 ExportToExcel();
                 txtFilePath.Text = "";
-                txtResponsePath.Text = "";
-                btnBrowse.Enabled = true;
+                //txtResponsePath.Text = "";
                 btnBrowse.Enabled = true;
             }
         }
@@ -142,7 +151,7 @@ namespace ShippingPilot
             openFileDialog1.Filter = "Excel Files|*.xls;*.xlsx;*.xlsm;*.csv";
         }
 
-        public DataTable ReadExcel()
+        public DataTable ReadPilotExcel()
         {
             string conn = string.Empty;
             DataTable dtexcel = new DataTable();
@@ -160,10 +169,54 @@ namespace ShippingPilot
                 }
                 catch (Exception ex)
                 {
-                    Remarks += $"ReadExcel - {ex}";
+                    lblInfo.Text = "*** Sheet name Should be PO Details";
+                    Remarks += $"ReadPilotExcel - {ex}";
                 }
             }
             return dtexcel;
+        }
+
+        public DataTable ReadLineItemExcel()
+        {
+            string conn = string.Empty;
+            DataTable dtexcel = new DataTable();
+
+            //if (fileextensin == "xlsx" || fileextensin == ".xls" || fileextensin == "xlsm")
+            //conn = @"provider=microsoft.jet.oledb.4.0;data source=" + fileName + ";extended properties='excel 8.0;hrd=yes;imex=1';"; //for below excel 2007  
+            //else
+            conn = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + txtLineItem.Text.Trim() + ";Extended Properties='Excel 12.0;HDR=NO';"; //for above excel 2007  
+            using (OleDbConnection con = new OleDbConnection(conn))
+            {
+                try
+                {
+                    OleDbDataAdapter oleAdpt = new OleDbDataAdapter("select * from [Item Report$]", con); //here we read data from sheet1  
+                    oleAdpt.Fill(dtexcel); //fill excel data into dataTable  
+                }
+                catch (Exception ex)
+                {
+                    lblInfo.Text = "***Sheet name Should be Item Report";
+                    Remarks += $"ReadLineItemExcel - {ex}";
+                }
+            }
+            return dtexcel;
+        }
+
+        private void btnLineItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                DialogResult LineItemResult = openFileDialog1.ShowDialog(); // Show the dialog.
+                if (LineItemResult == DialogResult.OK) // Test result.
+                {
+                    fileName = openFileDialog1.FileName;
+                    txtLineItem.Text = openFileDialog1.FileName;
+                }
+            }
+            catch (Exception Ex)
+            {
+                lblInfo.Text = "Exception while Browsing Line Item";
+                Remarks += $"BtnBrowse - {Ex}";
+            }
         }
 
         public void PilotOperations(DataRow dr)
@@ -263,13 +316,36 @@ namespace ShippingPilot
 
                 //creating lineitems
                 TestPilotServiceref.dsShipment.LineItemsRow drline = ds.LineItems.NewLineItemsRow();
-                drline.Pieces = 1;
-                drline.Weight = 600;
-                drline.Description = "Pallet";
-                drline.Length = 48;
-                drline.Width = 48;
-                drline.Height = 36;
-                ds.LineItems.Rows.Add(drline);
+
+                foreach (DataRow Row in dtLineItemData.Rows)
+                {
+                    if (Row.ItemArray[0].ToString().Trim() == dr.ItemArray[16].ToString().Trim())
+                    {
+                        drline.Pieces = Convert.ToInt32(Row.ItemArray[1]);
+                        drline.Weight = Convert.ToInt32(Row.ItemArray[5]);
+                        drline.Description = Row.ItemArray[0].ToString();
+                        drline.Length = Convert.ToInt32(Row.ItemArray[2]);
+                        drline.Width = Convert.ToInt32(Row.ItemArray[3]);
+                        drline.Height = Convert.ToInt32(Row.ItemArray[4]);
+                        ds.LineItems.Rows.Add(drline);
+                        /*
+                        if (Row.ItemArray[6].ToString() != string.Empty)
+                        {
+                            TestPilotServiceref.dsShipment.LineItemsRow drline2 = ds.LineItems.NewLineItemsRow();
+                            drline2.Pieces = Convert.ToInt32(Row.ItemArray[1]);
+                            drline2.Weight = Convert.ToInt32(Row.ItemArray[9]);
+                            drline2.Description = Row.ItemArray[0].ToString();
+                            drline2.Length = Convert.ToInt32(Row.ItemArray[6]);
+                            drline2.Width = Convert.ToInt32(Row.ItemArray[7]);
+                            drline2.Height = Convert.ToInt32(Row.ItemArray[8]);
+                            ds.LineItems.Rows.Add(drline2);
+                        }
+                        */
+                        break;
+                    }
+                }
+
+
 
                 ///save the shipment
                 TestPilotServiceref.PilotShipmentResult SaveResp = ws.Save(ds);
@@ -350,21 +426,6 @@ namespace ShippingPilot
 
             //Creae an Excel application instance
             Microsoft.Office.Interop.Excel.Application excelApp = new Microsoft.Office.Interop.Excel.Application();
-
-            /*           
-            //Create an Excel workbook instance and open it from the predefined location
-            string ImportExcelPath = @"F:\PilotResponse";
-            if (!Directory.Exists(@"C:"))
-            {
-                ImportExcelPath = @"D:\PilotResponse";
-            }
-            if (!Directory.Exists(ImportExcelPath))
-                Directory.CreateDirectory(ImportExcelPath);
-
-            string ImportExcelFileName = $"PilotResponse_{DateTime.Now.ToString().Replace("-", "").Replace(":", "").Replace(" ", "")}.xls";
-            string FilePath = $@"{ImportExcelPath}\{ImportExcelFileName}";
-            File.Create(FilePath);
-            */
             Microsoft.Office.Interop.Excel.Workbook excelWorkBook = excelApp.Workbooks.Open(txtResponsePath.Text);
 
             foreach (DataTable table in ds.Tables)
