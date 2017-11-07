@@ -15,11 +15,11 @@ namespace ShippingPilot
 {
     public partial class Form1 : Form
     {
-        string fileName = "";
         bool _IsSaved = false, _IsVoid = false;
         string Remarks = "", ProNumber = "", PrintPath = "";
         DataTable dtLineItemData = null;
-
+        TestPilotServiceref.dsShipment ds;
+        TestPilotServiceref.ShipmentService ws;
         DataTable table;
 
         public Form1()
@@ -35,7 +35,6 @@ namespace ShippingPilot
                 DialogResult result = openFileDialog1.ShowDialog(); // Show the dialog.
                 if (result == DialogResult.OK) // Test result.
                 {
-                    fileName = openFileDialog1.FileName;
                     txtFilePath.Text = openFileDialog1.FileName;
                 }
             }
@@ -90,11 +89,11 @@ namespace ShippingPilot
                     MessageBox.Show("OOOPS!!! First Select Response file Path !");
                     return;
                 }
-
+                btnSubmit.Enabled = false;
                 DialogResult res = MessageBox.Show("Are you Sure you want to Submit ?", "Ready To Submit!", MessageBoxButtons.YesNo);
                 if (res.Equals(DialogResult.Yes))
                 {
-                    btnSubmit.Enabled = false;
+                    //btnSubmit.Enabled = false;
                     DataTable dtPilotExcelData = ReadPilotExcel();
                     dtLineItemData = new DataTable();
                     dtLineItemData = ReadLineItemExcel();
@@ -140,11 +139,16 @@ namespace ShippingPilot
                 txtFilePath.Text = "";
                 //txtResponsePath.Text = "";
                 btnBrowse.Enabled = true;
+                btnSubmit.Enabled = true;
             }
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            //TestPilotServiceref  - For Testing
+            //CoPilotProd       - For Production
+            ws = new TestPilotServiceref.ShipmentService();
+
             lblUserName.Text = "Welcome Jia Guo";
             lblDateTime.Text = DateTime.Now.DayOfWeek.ToString() + " , " + DateTime.Now.ToShortDateString();
             lblInfo.Text = "Browse File to Submit & Select Response File Path";
@@ -159,7 +163,7 @@ namespace ShippingPilot
             //if (fileextensin == "xlsx" || fileextensin == ".xls" || fileextensin == "xlsm")
             //conn = @"provider=microsoft.jet.oledb.4.0;data source=" + fileName + ";extended properties='excel 8.0;hrd=yes;imex=1';"; //for below excel 2007  
             //else
-            conn = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + fileName + ";Extended Properties='Excel 12.0;HDR=NO';"; //for above excel 2007  
+            conn = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + txtFilePath.Text + ";Extended Properties='Excel 12.0;HDR=NO';"; //for above excel 2007  
             using (OleDbConnection con = new OleDbConnection(conn))
             {
                 try
@@ -208,7 +212,6 @@ namespace ShippingPilot
                 DialogResult LineItemResult = openFileDialog1.ShowDialog(); // Show the dialog.
                 if (LineItemResult == DialogResult.OK) // Test result.
                 {
-                    fileName = openFileDialog1.FileName;
                     txtLineItem.Text = openFileDialog1.FileName;
                 }
             }
@@ -223,10 +226,7 @@ namespace ShippingPilot
         {
             try
             {
-                //TestPilotServiceref  - For Testing
-                //CoPilotProd       - For Production
-                TestPilotServiceref.dsShipment ds;
-                TestPilotServiceref.ShipmentService ws = new TestPilotServiceref.ShipmentService();
+
                 //returns dsShipment with default values
                 ds = ws.GetNewShipment();
 
@@ -328,7 +328,7 @@ namespace ShippingPilot
                         drline.Width = Convert.ToInt32(Row.ItemArray[3]);
                         drline.Height = Convert.ToInt32(Row.ItemArray[4]);
                         ds.LineItems.Rows.Add(drline);
-                        /*
+
                         if (Row.ItemArray[6].ToString() != string.Empty)
                         {
                             TestPilotServiceref.dsShipment.LineItemsRow drline2 = ds.LineItems.NewLineItemsRow();
@@ -340,13 +340,10 @@ namespace ShippingPilot
                             drline2.Height = Convert.ToInt32(Row.ItemArray[8]);
                             ds.LineItems.Rows.Add(drline2);
                         }
-                        */
+
                         break;
                     }
                 }
-
-
-
                 ///save the shipment
                 TestPilotServiceref.PilotShipmentResult SaveResp = ws.Save(ds);
 
@@ -412,8 +409,8 @@ namespace ShippingPilot
                 table.Columns.Add("ProNumber", typeof(long));
                 table.Columns.Add("PrintPath", typeof(string));
             }
-            PrintPath = $@"https://copilot2.pilotdelivers.com/webairbill/reprint.aspx?section=ship&subsection=reprint&PrintWhat=Pro&ShipmentID={ProNumber}&ShipperCountry=US&ConsigneeCountry=US";
-            table.Rows.Add(PO, Order, Carrier, _IsSaved, _IsVoid, Remarks, ProNumber, PrintPath);
+            PrintPath = ProNumber != string.Empty ? $@"https://copilot2.pilotdelivers.com/webairbill/reprint.aspx?section=ship&subsection=reprint&PrintWhat=Pro&ShipmentID={ProNumber}&ShipperCountry=US&ConsigneeCountry=US" : string.Empty;
+            table.Rows.Add(PO, Order, Carrier, _IsSaved, _IsVoid, Remarks, ProNumber != string.Empty ? Convert.ToInt64(ProNumber) : 0, PrintPath);
 
             _IsSaved = _IsVoid = false;
             Remarks = ProNumber = PrintPath = string.Empty;

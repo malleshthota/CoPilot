@@ -55,12 +55,12 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Verdana", 9.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label1.Location = new System.Drawing.Point(16, 133);
+            this.label1.Location = new System.Drawing.Point(-3, 136);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(70, 16);
+            this.label1.Size = new System.Drawing.Size(108, 16);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Pilot File";
+            this.label1.Text = "Pilot Data File";
             // 
             // openFileDialog1
             // 
@@ -69,7 +69,6 @@
             // btnSubmit
             // 
             this.btnSubmit.BackColor = System.Drawing.Color.OrangeRed;
-            this.btnSubmit.Enabled = false;
             this.btnSubmit.Font = new System.Drawing.Font("Verdana", 9.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSubmit.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.btnSubmit.Location = new System.Drawing.Point(128, 331);
