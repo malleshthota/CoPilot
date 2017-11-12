@@ -168,7 +168,7 @@ namespace ShippingPilot
             {
                 excelReader = ExcelReaderFactory.CreateOpenXmlReader(stream);
             }
-            excelReader.IsFirstRowAsColumnNames = true;
+            //excelReader.IsFirstRowAsColumnNames = true;
             DataSet result2 = excelReader.AsDataSet();
             excelReader.Close();
             return result2.Tables[0];
