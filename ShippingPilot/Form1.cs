@@ -19,8 +19,8 @@ namespace ShippingPilot
         bool _IsSaved = false, _IsVoid = false;
         string Remarks = "", ProNumber = "", PrintPath = "";
         DataTable dtLineItemData = null;
-        CoPilotProd.dsShipment ds;
-        CoPilotProd.ShipmentService ws;
+        TestPilotServiceref.dsShipment ds;
+        TestPilotServiceref.ShipmentService ws;
         DataTable table;
 
         public Form1()
@@ -147,8 +147,8 @@ namespace ShippingPilot
         private void Form1_Load(object sender, EventArgs e)
         {
             //TestPilotServiceref  - For Testing
-            //CoPilotProd       - For Production
-            ws = new CoPilotProd.ShipmentService();
+            //CoPilot Prod       - For Production
+            ws = new TestPilotServiceref.ShipmentService();
 
             lblUserName.Text = "Welcome Jia Guo";
             lblDateTime.Text = DateTime.Now.DayOfWeek.ToString() + " , " + DateTime.Now.ToShortDateString();
@@ -159,14 +159,14 @@ namespace ShippingPilot
         public DataTable ReadExcelData(string fileName)
         {
             FileStream stream = File.Open(fileName, FileMode.Open, FileAccess.Read);
-            IExcelDataReader excelReader =null;
+            IExcelDataReader excelReader = null;
             try
             {
-                 excelReader = ExcelReaderFactory.CreateBinaryReader(stream);
+                excelReader = ExcelReaderFactory.CreateBinaryReader(stream);
             }
             catch
             {
-                 excelReader = ExcelReaderFactory.CreateOpenXmlReader(stream);
+                excelReader = ExcelReaderFactory.CreateOpenXmlReader(stream);
             }
             excelReader.IsFirstRowAsColumnNames = true;
             DataSet result2 = excelReader.AsDataSet();
@@ -284,7 +284,7 @@ namespace ShippingPilot
                 #endregion - Third Party Details Remain Same for all - End
 
                 //creating lineitems
-                CoPilotProd.dsShipment.LineItemsRow drline = ds.LineItems.NewLineItemsRow();
+                TestPilotServiceref.dsShipment.LineItemsRow drline = ds.LineItems.NewLineItemsRow();
 
                 bool _IsLineItemFound = false;
                 foreach (DataRow Row in dtLineItemData.Rows)
@@ -302,7 +302,7 @@ namespace ShippingPilot
 
                         if (Row.ItemArray[6].ToString() != string.Empty)
                         {
-                            CoPilotProd.dsShipment.LineItemsRow drline2 = ds.LineItems.NewLineItemsRow();
+                            TestPilotServiceref.dsShipment.LineItemsRow drline2 = ds.LineItems.NewLineItemsRow();
                             drline2.Pieces = Convert.ToInt32(Row.ItemArray[1]);
                             drline2.Weight = Convert.ToInt32(Row.ItemArray[9]);
                             drline2.Description = Row.ItemArray[0].ToString();
@@ -318,7 +318,7 @@ namespace ShippingPilot
                 if (_IsLineItemFound)
                 {
                     ///save the shipment
-                    CoPilotProd.PilotShipmentResult SaveResp = ws.Save(ds);
+                    TestPilotServiceref.PilotShipmentResult SaveResp = ws.Save(ds);
 
                     if (SaveResp.IsError == false)
                     {
@@ -335,7 +335,7 @@ namespace ShippingPilot
                     }
 
                     //Add wsShipment as Web Reference pointing to service address 
-                    CoPilotProd.dsVoid ds2;
+                    TestPilotServiceref.dsVoid ds2;
                     //returns dsVoid with default values
                     ds2 = ws.GetNewVoid();
                     ds2.Void[0].LocationID = 12884574;
@@ -346,7 +346,7 @@ namespace ShippingPilot
                     if (SaveResp.dsResult.Shipment[0].ProNumber.ToString().Trim() != string.Empty)
                     {
                         //void the shipment 
-                        CoPilotProd.PilotShipmentResult VoidResp = ws.Void(ds2);
+                        TestPilotServiceref.PilotShipmentResult VoidResp = ws.Void(ds2);
                         if (!VoidResp.IsError && VoidResp.Message == "Shipment Void Success")
                         {
                             Console.WriteLine("Shipment Void Success");
@@ -408,33 +408,44 @@ namespace ShippingPilot
                 DataSet ds = new DataSet("PilotResponse");
                 ds.Tables.Add(table);
 
-                //Creae an Excel application instance
-                Microsoft.Office.Interop.Excel.Application excelApp = new Microsoft.Office.Interop.Excel.Application();
-                Microsoft.Office.Interop.Excel.Workbook excelWorkBook = excelApp.Workbooks.Open(txtResponsePath.Text);
-
-                foreach (DataTable table in ds.Tables)
+                //    //Creae an Excel application instance
+                //    Microsoft.Office.Interop.Excel.Application excelApp = new Microsoft.Office.Interop.Excel.Application();
+                //    Microsoft.Office.Interop.Excel.Workbook excelWorkBook = excelApp.Workbooks.Open(txtResponsePath.Text);
+                StringBuilder sb = new StringBuilder();
+                foreach (DataRow row in ds.Tables[0].Rows)
                 {
-                    //Add a new worksheet to workbook with the Datatable name
-                    Microsoft.Office.Interop.Excel.Worksheet excelWorkSheet = excelWorkBook.Sheets.Add();
-                    excelWorkSheet.Name = $"Pilot Response_{DateTime.Now.ToString().Replace("-", "").Replace(":", "").Replace(" ", "")}";
+                    sb.AppendLine($"PO# ::  {row[0].ToString()}   ProNumber ::    {row[6].ToString()}  ");
+                    sb.AppendLine($"PrintPath:: { row[7].ToString()}");
+                    sb.AppendLine($" Remarks :: {row[5].ToString()}    Saved?  ::  {row[3].ToString()}  Voided? :: {row[4].ToString()} ");
+                    sb.AppendLine();
+                    sb.AppendLine("---------------------------------------------------------------------------------------");
+                    sb.AppendLine();
+                    //        //Add a new worksheet to workbook with the Datatable name
+                    //        Microsoft.Office.Interop.Excel.Worksheet excelWorkSheet = excelWorkBook.Sheets.Add();
+                    //        excelWorkSheet.Name = $"Pilot Response_{DateTime.Now.ToString().Replace("-", "").Replace(":", "").Replace(" ", "")}";
 
-                    for (int i = 1; i < table.Columns.Count + 1; i++)
-                    {
-                        excelWorkSheet.Cells[1, i] = table.Columns[i - 1].ColumnName;
-                    }
+                    //        for (int i = 1; i < table.Columns.Count + 1; i++)
+                    //        {
+                    //            excelWorkSheet.Cells[1, i] = table.Columns[i - 1].ColumnName;
+                    //        }
 
-                    for (int j = 0; j < table.Rows.Count; j++)
-                    {
-                        for (int k = 0; k < table.Columns.Count; k++)
-                        {
-                            excelWorkSheet.Cells[j + 2, k + 1] = table.Rows[j].ItemArray[k].ToString();
-                        }
-                    }
+                    //        for (int j = 0; j < table.Rows.Count; j++)
+                    //        {
+                    //            for (int k = 0; k < table.Columns.Count; k++)
+                    //            {
+                    //                excelWorkSheet.Cells[j + 2, k + 1] = table.Rows[j].ItemArray[k].ToString();
+                    //            }
+                    //        }
                 }
-                excelWorkBook.Save();
-                excelWorkBook.Close();
-                excelApp.Quit();
+                //    excelWorkBook.Save();
+                //    excelWorkBook.Close();
+                //    excelApp.Quit();
+                string fileName = $"{txtResponsePath.Text}Pilot Response_{DateTime.Now.ToString().Replace("-", "").Replace(":", "").Replace(" ", "")}";
+                TextWriter tw = File.CreateText(fileName);
+                tw.Write(sb);
+                tw.Close();
             }
+
         }
     }
 }
