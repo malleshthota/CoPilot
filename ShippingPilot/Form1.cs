@@ -96,16 +96,8 @@ namespace ShippingPilot
                 if (res.Equals(DialogResult.Yes))
                 {
                     //btnSubmit.Enabled = false;
-                    DataTable dtPilotExcelData = ReadExcelXLSX(txtFilePath.Text);
-                    dtLineItemData = new DataTable();
-                    try
-                    {
-                        dtLineItemData = ReadExcelXLS(txtLineItem.Text);
-                    }
-                    catch
-                    {
-                        dtLineItemData = ReadExcelXLSX(txtLineItem.Text);
-                    }
+                    DataTable dtPilotExcelData = ReadExcelData(txtFilePath.Text);
+                    dtLineItemData = ReadExcelData(txtLineItem.Text);
                     if (dtPilotExcelData == null || dtLineItemData == null)
                         return;
 
@@ -164,24 +156,22 @@ namespace ShippingPilot
             openFileDialog1.Filter = "Excel Files|*.xls;*.xlsx;*.xlsm;*.csv";
         }
 
-        public DataTable ReadExcelXLS(string fileName)
-        {
-            FileStream stream2 = File.Open(fileName, FileMode.Open, FileAccess.Read);
-            IExcelDataReader excelReader2 = ExcelReaderFactory.CreateBinaryReader(stream2);
-            excelReader2.IsFirstRowAsColumnNames = true;
-            DataSet result2 = excelReader2.AsDataSet();
-            excelReader2.Close();
-            return result2.Tables[0];
-        }
-
-        public DataTable ReadExcelXLSX(string fileName)
+        public DataTable ReadExcelData(string fileName)
         {
             FileStream stream = File.Open(fileName, FileMode.Open, FileAccess.Read);
-            IExcelDataReader excelReader = ExcelReaderFactory.CreateOpenXmlReader(stream);
-            //excelReader.IsFirstRowAsColumnNames = true;
-            DataSet result = excelReader.AsDataSet();
+            IExcelDataReader excelReader =null;
+            try
+            {
+                 excelReader = ExcelReaderFactory.CreateBinaryReader(stream);
+            }
+            catch
+            {
+                 excelReader = ExcelReaderFactory.CreateOpenXmlReader(stream);
+            }
+            excelReader.IsFirstRowAsColumnNames = true;
+            DataSet result2 = excelReader.AsDataSet();
             excelReader.Close();
-            return result.Tables[0];
+            return result2.Tables[0];
         }
 
         private void btnLineItem_Click(object sender, EventArgs e)
