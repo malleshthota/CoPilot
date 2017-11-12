@@ -40,11 +40,11 @@
             this.lblInfo = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.txtResponsePath = new System.Windows.Forms.TextBox();
-            this.btnResponse = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.btnLineItem = new System.Windows.Forms.Button();
             this.txtLineItem = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
+            this.lblRespFilePath = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -167,18 +167,6 @@
             this.txtResponsePath.Size = new System.Drawing.Size(342, 22);
             this.txtResponsePath.TabIndex = 10;
             // 
-            // btnResponse
-            // 
-            this.btnResponse.BackColor = System.Drawing.Color.Orange;
-            this.btnResponse.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.btnResponse.Location = new System.Drawing.Point(457, 227);
-            this.btnResponse.Name = "btnResponse";
-            this.btnResponse.Size = new System.Drawing.Size(137, 24);
-            this.btnResponse.TabIndex = 11;
-            this.btnResponse.Text = "Browse";
-            this.btnResponse.UseVisualStyleBackColor = false;
-            this.btnResponse.Click += new System.EventHandler(this.btnResponse_Click);
-            // 
             // label3
             // 
             this.label3.AutoSize = true;
@@ -186,9 +174,9 @@
             this.label3.ForeColor = System.Drawing.Color.Red;
             this.label3.Location = new System.Drawing.Point(107, 258);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(310, 12);
+            this.label3.Size = new System.Drawing.Size(287, 12);
             this.label3.TabIndex = 12;
-            this.label3.Text = "*Select Response File. Ex:: C:\\PilotResponse\\abc.xlsx";
+            this.label3.Text = "*Provide Response Folder. Ex:: C:\\PilotResponse\\";
             // 
             // btnLineItem
             // 
@@ -220,17 +208,27 @@
             this.label4.Text = "Line Item Data";
             this.label4.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
+            // lblRespFilePath
+            // 
+            this.lblRespFilePath.AutoSize = true;
+            this.lblRespFilePath.BackColor = System.Drawing.Color.Yellow;
+            this.lblRespFilePath.ForeColor = System.Drawing.Color.DarkRed;
+            this.lblRespFilePath.Location = new System.Drawing.Point(104, 101);
+            this.lblRespFilePath.Name = "lblRespFilePath";
+            this.lblRespFilePath.Size = new System.Drawing.Size(0, 14);
+            this.lblRespFilePath.TabIndex = 16;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.LightGray;
             this.ClientSize = new System.Drawing.Size(661, 435);
+            this.Controls.Add(this.lblRespFilePath);
             this.Controls.Add(this.btnLineItem);
             this.Controls.Add(this.txtLineItem);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.btnResponse);
             this.Controls.Add(this.txtResponsePath);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.lblInfo);
@@ -267,11 +265,11 @@
         private System.Windows.Forms.Label lblInfo;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtResponsePath;
-        private System.Windows.Forms.Button btnResponse;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button btnLineItem;
         private System.Windows.Forms.TextBox txtLineItem;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label lblRespFilePath;
     }
 }
 

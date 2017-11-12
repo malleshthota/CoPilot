@@ -30,7 +30,8 @@ namespace ShippingPilot
 
         private void btnBrowse_Click(object sender, EventArgs e)
         {
-            lblInfo.Text = "";
+            lblInfo.Text = string.Empty;
+            lblRespFilePath.Text = string.Empty;
             try
             {
                 DialogResult result = openFileDialog1.ShowDialog(); // Show the dialog.
@@ -444,6 +445,7 @@ namespace ShippingPilot
                 TextWriter tw = File.CreateText(fileName);
                 tw.Write(sb);
                 tw.Close();
+                lblRespFilePath.Text = $"Response File Path :: {fileName}";
             }
 
         }
