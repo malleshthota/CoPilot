@@ -38,13 +38,11 @@
             this.lblUserName = new System.Windows.Forms.Label();
             this.lblDateTime = new System.Windows.Forms.Label();
             this.lblInfo = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.txtResponsePath = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
             this.btnLineItem = new System.Windows.Forms.Button();
             this.txtLineItem = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.lblRespFilePath = new System.Windows.Forms.Label();
+            this.txtResponse = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -69,7 +67,7 @@
             this.btnSubmit.BackColor = System.Drawing.Color.OrangeRed;
             this.btnSubmit.Font = new System.Drawing.Font("Verdana", 9.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSubmit.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.btnSubmit.Location = new System.Drawing.Point(128, 331);
+            this.btnSubmit.Location = new System.Drawing.Point(148, 315);
             this.btnSubmit.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnSubmit.Name = "btnSubmit";
             this.btnSubmit.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
@@ -143,40 +141,11 @@
             this.lblInfo.AutoSize = true;
             this.lblInfo.Font = new System.Drawing.Font("Verdana", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblInfo.ForeColor = System.Drawing.Color.Navy;
-            this.lblInfo.Location = new System.Drawing.Point(125, 298);
+            this.lblInfo.Location = new System.Drawing.Point(114, 263);
             this.lblInfo.Name = "lblInfo";
             this.lblInfo.Size = new System.Drawing.Size(42, 18);
             this.lblInfo.TabIndex = 8;
             this.lblInfo.Text = "Info";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(-3, 231);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(98, 14);
-            this.label2.TabIndex = 9;
-            this.label2.Text = "Response File";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            // 
-            // txtResponsePath
-            // 
-            this.txtResponsePath.ForeColor = System.Drawing.Color.Blue;
-            this.txtResponsePath.Location = new System.Drawing.Point(107, 229);
-            this.txtResponsePath.Name = "txtResponsePath";
-            this.txtResponsePath.Size = new System.Drawing.Size(342, 22);
-            this.txtResponsePath.TabIndex = 10;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.ForeColor = System.Drawing.Color.Red;
-            this.label3.Location = new System.Drawing.Point(107, 258);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(287, 12);
-            this.label3.TabIndex = 12;
-            this.label3.Text = "*Provide Response Folder. Ex:: C:\\PilotResponse\\";
             // 
             // btnLineItem
             // 
@@ -208,29 +177,35 @@
             this.label4.Text = "Line Item Data";
             this.label4.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
-            // lblRespFilePath
+            // txtResponse
             // 
-            this.lblRespFilePath.AutoSize = true;
-            this.lblRespFilePath.BackColor = System.Drawing.Color.Yellow;
-            this.lblRespFilePath.ForeColor = System.Drawing.Color.DarkRed;
-            this.lblRespFilePath.Location = new System.Drawing.Point(104, 101);
-            this.lblRespFilePath.Name = "lblRespFilePath";
-            this.lblRespFilePath.Size = new System.Drawing.Size(0, 14);
-            this.lblRespFilePath.TabIndex = 16;
+            this.txtResponse.Location = new System.Drawing.Point(630, 41);
+            this.txtResponse.Multiline = true;
+            this.txtResponse.Name = "txtResponse";
+            this.txtResponse.Size = new System.Drawing.Size(571, 403);
+            this.txtResponse.TabIndex = 17;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.ForeColor = System.Drawing.Color.Red;
+            this.label2.Location = new System.Drawing.Point(653, 24);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(70, 14);
+            this.label2.TabIndex = 18;
+            this.label2.Text = "Response";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.LightGray;
-            this.ClientSize = new System.Drawing.Size(661, 435);
-            this.Controls.Add(this.lblRespFilePath);
+            this.ClientSize = new System.Drawing.Size(1226, 438);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.txtResponse);
             this.Controls.Add(this.btnLineItem);
             this.Controls.Add(this.txtLineItem);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.txtResponsePath);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.lblInfo);
             this.Controls.Add(this.lblDateTime);
             this.Controls.Add(this.lblUserName);
@@ -263,13 +238,11 @@
         private System.Windows.Forms.Label lblUserName;
         private System.Windows.Forms.Label lblDateTime;
         private System.Windows.Forms.Label lblInfo;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox txtResponsePath;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button btnLineItem;
         private System.Windows.Forms.TextBox txtLineItem;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label lblRespFilePath;
+        private System.Windows.Forms.TextBox txtResponse;
+        private System.Windows.Forms.Label label2;
     }
 }
 

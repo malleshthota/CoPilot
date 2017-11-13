@@ -19,8 +19,8 @@ namespace ShippingPilot
         bool _IsSaved = false, _IsVoid = false;
         string Remarks = "", ProNumber = "", PrintPath = "";
         DataTable dtLineItemData = null;
-        CoPilotProd.dsShipment ds;
-        CoPilotProd.ShipmentService ws;
+        TestPilotServiceref.dsShipment ds;
+        TestPilotServiceref.ShipmentService ws;
         DataTable table;
 
         public Form1()
@@ -31,7 +31,7 @@ namespace ShippingPilot
         private void btnBrowse_Click(object sender, EventArgs e)
         {
             lblInfo.Text = string.Empty;
-            lblRespFilePath.Text = string.Empty;
+            txtResponse.Text = string.Empty;
             try
             {
                 DialogResult result = openFileDialog1.ShowDialog(); // Show the dialog.
@@ -44,28 +44,6 @@ namespace ShippingPilot
             {
                 lblInfo.Text = "Exception while Browsing file";
                 Remarks += $"BtnBrowse - {Ex}";
-            }
-        }
-
-        private void btnResponse_Click(object sender, EventArgs e)
-        {
-            DialogResult result = openFileDialog1.ShowDialog(); // Show the dialog.
-            if (result == DialogResult.OK) // Test result.
-            {
-                txtResponsePath.Text = openFileDialog1.FileName;
-                btnSubmit.Enabled = true;
-                lblInfo.Text = "Click on Submit";
-            }
-            var FileExtensin = Path.GetExtension(openFileDialog1.FileName);
-            if (FileExtensin == "xlsx" || FileExtensin == ".xls")
-            {
-                txtResponsePath.Text = "";
-                MessageBox.Show(@"Please Select Response File. Ex:: C:\PilotResponse\abc.xlsx");
-            }
-            if (!File.Exists(openFileDialog1.FileName) && txtResponsePath.Text != "")
-            {
-                txtResponsePath.Text = "";
-                MessageBox.Show("File Not Exists in given location");
             }
         }
 
@@ -86,11 +64,7 @@ namespace ShippingPilot
                     return;
                 }
 
-                if (txtResponsePath.Text.Trim() == "")
-                {
-                    MessageBox.Show("OOOPS!!! First Select Response file Path !");
-                    return;
-                }
+
                 MessageBox.Show("Please close selected files while processing....!");
                 btnSubmit.Enabled = false;
                 DialogResult res = MessageBox.Show("Are you Sure you want to Submit ?", "Ready To Submit!", MessageBoxButtons.YesNo);
@@ -147,9 +121,9 @@ namespace ShippingPilot
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            //TestPilot Serviceref  - For Testing
-            //CoPilotProd       - For Production
-            ws = new CoPilotProd.ShipmentService();
+            //TestPilotServiceref  - For Testing
+            //CoPilot Prod       - For Production
+            ws = new TestPilotServiceref.ShipmentService();
 
             lblUserName.Text = "Welcome Jia Guo";
             lblDateTime.Text = DateTime.Now.DayOfWeek.ToString() + " , " + DateTime.Now.ToShortDateString();
@@ -285,7 +259,7 @@ namespace ShippingPilot
                 #endregion - Third Party Details Remain Same for all - End
 
                 //creating lineitems
-                CoPilotProd.dsShipment.LineItemsRow drline = ds.LineItems.NewLineItemsRow();
+                TestPilotServiceref.dsShipment.LineItemsRow drline = ds.LineItems.NewLineItemsRow();
 
                 bool _IsLineItemFound = false;
                 foreach (DataRow Row in dtLineItemData.Rows)
@@ -303,7 +277,7 @@ namespace ShippingPilot
 
                         if (Row.ItemArray[6].ToString() != string.Empty)
                         {
-                            CoPilotProd.dsShipment.LineItemsRow drline2 = ds.LineItems.NewLineItemsRow();
+                            TestPilotServiceref.dsShipment.LineItemsRow drline2 = ds.LineItems.NewLineItemsRow();
                             drline2.Pieces = Convert.ToInt32(Row.ItemArray[1]);
                             drline2.Weight = Convert.ToInt32(Row.ItemArray[9]);
                             drline2.Description = Row.ItemArray[0].ToString();
@@ -319,7 +293,7 @@ namespace ShippingPilot
                 if (_IsLineItemFound)
                 {
                     ///save the shipment
-                    CoPilotProd.PilotShipmentResult SaveResp = ws.Save(ds);
+                    TestPilotServiceref.PilotShipmentResult SaveResp = ws.Save(ds);
 
                     if (SaveResp.IsError == false)
                     {
@@ -336,7 +310,7 @@ namespace ShippingPilot
                     }
 
                     //Add wsShipment as Web Reference pointing to service address 
-                    CoPilotProd.dsVoid ds2;
+                    TestPilotServiceref.dsVoid ds2;
                     //returns dsVoid with default values
                     ds2 = ws.GetNewVoid();
                     ds2.Void[0].LocationID = 12884574;
@@ -347,7 +321,7 @@ namespace ShippingPilot
                     if (SaveResp.dsResult.Shipment[0].ProNumber.ToString().Trim() != string.Empty)
                     {
                         //void the shipment 
-                        CoPilotProd.PilotShipmentResult VoidResp = ws.Void(ds2);
+                        TestPilotServiceref.PilotShipmentResult VoidResp = ws.Void(ds2);
                         if (!VoidResp.IsError && VoidResp.Message == "Shipment Void Success")
                         {
                             Console.WriteLine("Shipment Void Success");
@@ -441,11 +415,12 @@ namespace ShippingPilot
                 //    excelWorkBook.Save();
                 //    excelWorkBook.Close();
                 //    excelApp.Quit();
-                string fileName = $"{txtResponsePath.Text}Pilot Response_{DateTime.Now.ToString().Replace("-", "").Replace(":", "").Replace(" ", "")}";
-                TextWriter tw = File.CreateText(fileName);
-                tw.Write(sb);
-                tw.Close();
-                lblRespFilePath.Text = $"Response File Path :: {fileName}";
+                //string fileName = $"{txtResponsePath.Text}Pilot Response_{DateTime.Now.ToString().Replace("-", "").Replace(":", "").Replace(" ", "")}";
+                //TextWriter tw = File.CreateText(fileName);
+                //tw.Write(sb);
+                //tw.Close();
+                //lblRespFilePath.Text = $"Response File Path :: {fileName}";
+                txtResponse.Text = sb.ToString();
             }
 
         }
