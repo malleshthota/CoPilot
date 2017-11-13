@@ -19,8 +19,8 @@ namespace ShippingPilot
         bool _IsSaved = false, _IsVoid = false;
         string Remarks = "", ProNumber = "", PrintPath = "";
         DataTable dtLineItemData = null;
-        TestPilotServiceref.dsShipment ds;
-        TestPilotServiceref.ShipmentService ws;
+        CoPilotProd.dsShipment ds;
+        CoPilotProd.ShipmentService ws;
         DataTable table;
 
         public Form1()
@@ -121,9 +121,9 @@ namespace ShippingPilot
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            //TestPilotServiceref  - For Testing
-            //CoPilot Prod       - For Production
-            ws = new TestPilotServiceref.ShipmentService();
+            //TestPilot Serviceref  - For Testing
+            //CoPilotProd       - For Production
+            ws = new CoPilotProd.ShipmentService();
 
             lblUserName.Text = "Welcome Jia Guo";
             lblDateTime.Text = DateTime.Now.DayOfWeek.ToString() + " , " + DateTime.Now.ToShortDateString();
@@ -259,7 +259,7 @@ namespace ShippingPilot
                 #endregion - Third Party Details Remain Same for all - End
 
                 //creating lineitems
-                TestPilotServiceref.dsShipment.LineItemsRow drline = ds.LineItems.NewLineItemsRow();
+                CoPilotProd.dsShipment.LineItemsRow drline = ds.LineItems.NewLineItemsRow();
 
                 bool _IsLineItemFound = false;
                 foreach (DataRow Row in dtLineItemData.Rows)
@@ -277,7 +277,7 @@ namespace ShippingPilot
 
                         if (Row.ItemArray[6].ToString() != string.Empty)
                         {
-                            TestPilotServiceref.dsShipment.LineItemsRow drline2 = ds.LineItems.NewLineItemsRow();
+                            CoPilotProd.dsShipment.LineItemsRow drline2 = ds.LineItems.NewLineItemsRow();
                             drline2.Pieces = Convert.ToInt32(Row.ItemArray[1]);
                             drline2.Weight = Convert.ToInt32(Row.ItemArray[9]);
                             drline2.Description = Row.ItemArray[0].ToString();
@@ -293,7 +293,7 @@ namespace ShippingPilot
                 if (_IsLineItemFound)
                 {
                     ///save the shipment
-                    TestPilotServiceref.PilotShipmentResult SaveResp = ws.Save(ds);
+                    CoPilotProd.PilotShipmentResult SaveResp = ws.Save(ds);
 
                     if (SaveResp.IsError == false)
                     {
@@ -310,7 +310,7 @@ namespace ShippingPilot
                     }
 
                     //Add wsShipment as Web Reference pointing to service address 
-                    TestPilotServiceref.dsVoid ds2;
+                    CoPilotProd.dsVoid ds2;
                     //returns dsVoid with default values
                     ds2 = ws.GetNewVoid();
                     ds2.Void[0].LocationID = 12884574;
@@ -321,7 +321,7 @@ namespace ShippingPilot
                     if (SaveResp.dsResult.Shipment[0].ProNumber.ToString().Trim() != string.Empty)
                     {
                         //void the shipment 
-                        TestPilotServiceref.PilotShipmentResult VoidResp = ws.Void(ds2);
+                        CoPilotProd.PilotShipmentResult VoidResp = ws.Void(ds2);
                         if (!VoidResp.IsError && VoidResp.Message == "Shipment Void Success")
                         {
                             Console.WriteLine("Shipment Void Success");
