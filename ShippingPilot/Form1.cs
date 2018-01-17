@@ -7,6 +7,7 @@ using System.Data.OleDb;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Security.Permissions;
 using System.Text;
 using System.Threading.Tasks;
@@ -72,7 +73,7 @@ namespace ShippingPilot
                 {
                     //btnSubmit.Enabled = false;
                     DataTable dtPilotExcelData = ReadExcelData(txtFilePath.Text);
-                    dtLineItemData = ReadExcelData(txtLineItem.Text);
+                    dtLineItemData = ReadLineItemData(txtLineItem.Text);
                     if (dtPilotExcelData == null || dtLineItemData == null)
                         return;
 
@@ -86,10 +87,10 @@ namespace ShippingPilot
                             continue;
                         }
 
-                        if (dr.ItemArray[22].ToString().Trim() == string.Empty)
+                        if (dr.ItemArray[23].ToString().Trim() == string.Empty)
                             continue;
 
-                        if (dr.ItemArray[22].ToString().Trim() == "Pilot Freight Basic Delivery")
+                        if (dr.ItemArray[23].ToString().Trim() == "Pilot Freight Basic Delivery")
                         {
                             PilotOperations(dr);
                         }
@@ -98,7 +99,7 @@ namespace ShippingPilot
                             _IsSaved = false;
                             _IsVoid = false;
                             Remarks = "Invalid Carrier";
-                            TableOperations(dr.ItemArray[0].ToString(), dr.ItemArray[1].ToString(), dr.ItemArray[25].ToString());
+                            TableOperations(dr.ItemArray[0].ToString(), dr.ItemArray[1].ToString(), dr.ItemArray[26].ToString());
                         }
                     }
                     lblInfo.Text = "Request Submitted Succesfully.";
@@ -132,6 +133,42 @@ namespace ShippingPilot
         }
 
         public DataTable ReadExcelData(string fileName)
+        {
+            FileStream stream = File.Open(fileName, FileMode.Open, FileAccess.Read);
+            IExcelDataReader excelReader = null;
+            try
+            {
+                HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create(fileName);
+                webRequest.ContentType = "application/ms-excel";
+                WebResponse objResponse = webRequest.GetResponse();
+                Stream excelStream = objResponse.GetResponseStream();
+
+                // your code snippet here
+                MemoryStream ms = new MemoryStream();
+                byte[] byteBucket = new byte[100];
+                int currentByteRead = excelStream.Read(byteBucket, 0, 100);
+                while (currentByteRead > 0)
+                {
+                    ms.Write(byteBucket, 0, currentByteRead);
+                    currentByteRead = excelStream.Read(byteBucket, 0, 100);
+                }
+                ms.Position = 0;
+
+                // using ExcelDataReader to read stream
+                excelReader = ExcelReaderFactory.CreateOpenXmlReader(ms);
+                // to display the content or other work...
+            }
+            catch (Exception ex)
+            {
+                excelReader = ExcelReaderFactory.CreateOpenXmlReader(stream);
+            }
+            //excelReader.IsFirstRowAsColumnNames = true;
+            DataSet result2 = excelReader.AsDataSet();
+            excelReader.Close();
+            return result2.Tables[0];
+        }
+
+        public DataTable ReadLineItemData(string fileName)
         {
             FileStream stream = File.Open(fileName, FileMode.Open, FileAccess.Read);
             IExcelDataReader excelReader = null;
@@ -190,8 +227,8 @@ namespace ShippingPilot
                 ds.Shipment[0].IsScreeningConsent = "Yes"; // Doubt
                 ds.Shipment[0].PayType = "THIRD PARTY";   // Doubt
                 ds.Shipment[0].Service = "BA"; // Doubt
-                ds.Shipment[0].ProductName = dr.ItemArray[16].ToString();
-                ds.Shipment[0].ProductDescription = dr.ItemArray[18].ToString(); // Item Description
+                ds.Shipment[0].ProductName = dr.ItemArray[17].ToString();
+                ds.Shipment[0].ProductDescription = dr.ItemArray[19].ToString(); // Item Description
                 ds.Shipment[0].SpecialInstructions = ""; // Doubt
                 ds.Shipment[0].ShipperRef = dr.ItemArray[0].ToString();
                 ds.Shipment[0].ConsigneeRef = dr.ItemArray[0].ToString();
@@ -264,7 +301,7 @@ namespace ShippingPilot
                 bool _IsLineItemFound = false;
                 foreach (DataRow Row in dtLineItemData.Rows)
                 {
-                    if (Row.ItemArray[0].ToString().Trim() == dr.ItemArray[16].ToString().Trim())
+                    if (Row.ItemArray[0].ToString().Trim() == dr.ItemArray[17].ToString().Trim())
                     {
                         _IsLineItemFound = true;
                         drline.Pieces = Convert.ToInt32(Row.ItemArray[1]);
@@ -351,7 +388,7 @@ namespace ShippingPilot
             }
             finally
             {
-                TableOperations(dr.ItemArray[0].ToString(), dr.ItemArray[1].ToString(), dr.ItemArray[25].ToString());
+                TableOperations(dr.ItemArray[0].ToString(), dr.ItemArray[1].ToString(), dr.ItemArray[26].ToString());
             }
         }
 
