@@ -51,7 +51,7 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Verdana", 9.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label1.Location = new System.Drawing.Point(16, 171);
+            this.label1.Location = new System.Drawing.Point(15, 212);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(108, 16);
@@ -67,7 +67,7 @@
             this.btnSubmit.BackColor = System.Drawing.Color.OrangeRed;
             this.btnSubmit.Font = new System.Drawing.Font("Verdana", 15.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSubmit.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.btnSubmit.Location = new System.Drawing.Point(145, 372);
+            this.btnSubmit.Location = new System.Drawing.Point(144, 413);
             this.btnSubmit.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnSubmit.Name = "btnSubmit";
             this.btnSubmit.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
@@ -81,7 +81,7 @@
             // 
             this.txtFilePath.Font = new System.Drawing.Font("Verdana", 9.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtFilePath.ForeColor = System.Drawing.Color.MediumBlue;
-            this.txtFilePath.Location = new System.Drawing.Point(126, 168);
+            this.txtFilePath.Location = new System.Drawing.Point(125, 209);
             this.txtFilePath.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.txtFilePath.Name = "txtFilePath";
             this.txtFilePath.Size = new System.Drawing.Size(342, 22);
@@ -92,7 +92,7 @@
             this.btnBrowse.BackColor = System.Drawing.Color.OrangeRed;
             this.btnBrowse.Font = new System.Drawing.Font("Verdana", 9.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnBrowse.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.btnBrowse.Location = new System.Drawing.Point(476, 161);
+            this.btnBrowse.Location = new System.Drawing.Point(475, 202);
             this.btnBrowse.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnBrowse.Name = "btnBrowse";
             this.btnBrowse.Size = new System.Drawing.Size(137, 34);
@@ -103,24 +103,24 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Image = global::ShippingPilot.Properties.Resources.logo_2010_3;
-            this.pictureBox1.Location = new System.Drawing.Point(433, 5);
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(418, 12);
             this.pictureBox1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(274, 68);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pictureBox1.Size = new System.Drawing.Size(518, 114);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 4;
             this.pictureBox1.TabStop = false;
             // 
             // lblUserName
             // 
             this.lblUserName.AutoSize = true;
-            this.lblUserName.Font = new System.Drawing.Font("Verdana", 9.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblUserName.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblUserName.ForeColor = System.Drawing.Color.OrangeRed;
             this.lblUserName.Location = new System.Drawing.Point(44, 54);
             this.lblUserName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblUserName.Name = "lblUserName";
-            this.lblUserName.Size = new System.Drawing.Size(38, 16);
+            this.lblUserName.Size = new System.Drawing.Size(44, 18);
             this.lblUserName.TabIndex = 6;
             this.lblUserName.Text = "......";
             // 
@@ -141,7 +141,7 @@
             this.lblInfo.AutoSize = true;
             this.lblInfo.Font = new System.Drawing.Font("Verdana", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblInfo.ForeColor = System.Drawing.Color.Navy;
-            this.lblInfo.Location = new System.Drawing.Point(123, 305);
+            this.lblInfo.Location = new System.Drawing.Point(122, 346);
             this.lblInfo.Name = "lblInfo";
             this.lblInfo.Size = new System.Drawing.Size(42, 18);
             this.lblInfo.TabIndex = 8;
@@ -151,7 +151,7 @@
             // 
             this.btnLineItem.BackColor = System.Drawing.Color.OrangeRed;
             this.btnLineItem.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.btnLineItem.Location = new System.Drawing.Point(476, 225);
+            this.btnLineItem.Location = new System.Drawing.Point(475, 266);
             this.btnLineItem.Name = "btnLineItem";
             this.btnLineItem.Size = new System.Drawing.Size(137, 33);
             this.btnLineItem.TabIndex = 15;
@@ -162,7 +162,7 @@
             // txtLineItem
             // 
             this.txtLineItem.ForeColor = System.Drawing.Color.Blue;
-            this.txtLineItem.Location = new System.Drawing.Point(126, 227);
+            this.txtLineItem.Location = new System.Drawing.Point(125, 268);
             this.txtLineItem.Name = "txtLineItem";
             this.txtLineItem.Size = new System.Drawing.Size(342, 22);
             this.txtLineItem.TabIndex = 14;
@@ -170,7 +170,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(16, 229);
+            this.label4.Location = new System.Drawing.Point(15, 270);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(105, 14);
             this.label4.TabIndex = 13;
@@ -179,7 +179,7 @@
             // 
             // txtResponse
             // 
-            this.txtResponse.Location = new System.Drawing.Point(634, 122);
+            this.txtResponse.Location = new System.Drawing.Point(638, 197);
             this.txtResponse.Multiline = true;
             this.txtResponse.Name = "txtResponse";
             this.txtResponse.Size = new System.Drawing.Size(605, 508);
@@ -190,7 +190,7 @@
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Verdana", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.Red;
-            this.label2.Location = new System.Drawing.Point(671, 101);
+            this.label2.Location = new System.Drawing.Point(675, 176);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(94, 18);
             this.label2.TabIndex = 18;
