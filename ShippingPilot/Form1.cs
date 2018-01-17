@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Excel;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -29,7 +30,8 @@ namespace ShippingPilot
 
         private void btnBrowse_Click(object sender, EventArgs e)
         {
-            lblInfo.Text = "";
+            lblInfo.Text = string.Empty;
+            txtResponse.Text = string.Empty;
             try
             {
                 DialogResult result = openFileDialog1.ShowDialog(); // Show the dialog.
@@ -42,28 +44,6 @@ namespace ShippingPilot
             {
                 lblInfo.Text = "Exception while Browsing file";
                 Remarks += $"BtnBrowse - {Ex}";
-            }
-        }
-
-        private void btnResponse_Click(object sender, EventArgs e)
-        {
-            DialogResult result = openFileDialog1.ShowDialog(); // Show the dialog.
-            if (result == DialogResult.OK) // Test result.
-            {
-                txtResponsePath.Text = openFileDialog1.FileName;
-                btnSubmit.Enabled = true;
-                lblInfo.Text = "Click on Submit";
-            }
-            var FileExtensin = Path.GetExtension(openFileDialog1.FileName);
-            if (FileExtensin == "xlsx" || FileExtensin == ".xls")
-            {
-                txtResponsePath.Text = "";
-                MessageBox.Show(@"Please Select Response File. Ex:: C:\PilotResponse\abc.xlsx");
-            }
-            if (!File.Exists(openFileDialog1.FileName) && txtResponsePath.Text != "")
-            {
-                txtResponsePath.Text = "";
-                MessageBox.Show("File Not Exists in given location");
             }
         }
 
@@ -84,20 +64,15 @@ namespace ShippingPilot
                     return;
                 }
 
-                if (txtFilePath.Text.Trim() == "")
-                {
-                    MessageBox.Show("OOOPS!!! First Select Response file Path !");
-                    return;
-                }
+
                 MessageBox.Show("Please close selected files while processing....!");
                 btnSubmit.Enabled = false;
                 DialogResult res = MessageBox.Show("Are you Sure you want to Submit ?", "Ready To Submit!", MessageBoxButtons.YesNo);
                 if (res.Equals(DialogResult.Yes))
                 {
                     //btnSubmit.Enabled = false;
-                    DataTable dtPilotExcelData = ReadPilotExcel();
-                    dtLineItemData = new DataTable();
-                    dtLineItemData = ReadLineItemExcel();
+                    DataTable dtPilotExcelData = ReadExcelData(txtFilePath.Text);
+                    dtLineItemData = ReadExcelData(txtLineItem.Text);
                     if (dtPilotExcelData == null || dtLineItemData == null)
                         return;
 
@@ -146,7 +121,7 @@ namespace ShippingPilot
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            //TestPilotServiceref  - For Testing
+            //TestPilot Serviceref  - For Testing
             //CoPilotProd       - For Production
             ws = new CoPilotProd.ShipmentService();
 
@@ -156,54 +131,22 @@ namespace ShippingPilot
             openFileDialog1.Filter = "Excel Files|*.xls;*.xlsx;*.xlsm;*.csv";
         }
 
-        public DataTable ReadPilotExcel()
+        public DataTable ReadExcelData(string fileName)
         {
-            string conn = string.Empty;
-            DataTable dtexcel = new DataTable();
-
-            //if (fileextensin == "xlsx" || fileextensin == ".xls" || fileextensin == "xlsm")
-            //conn = @"provider=microsoft.jet.oledb.4.0;data source=" + fileName + ";extended properties='excel 8.0;hrd=yes;imex=1';"; //for below excel 2007  
-            //else
-            conn = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + txtFilePath.Text + ";Extended Properties='Excel 12.0;HDR=NO';"; //for above excel 2007  
-            using (OleDbConnection con = new OleDbConnection(conn))
+            FileStream stream = File.Open(fileName, FileMode.Open, FileAccess.Read);
+            IExcelDataReader excelReader = null;
+            try
             {
-                try
-                {
-                    OleDbDataAdapter oleAdpt = new OleDbDataAdapter("select * from [PO Details$]", con); //here we read data from sheet1  
-                    oleAdpt.Fill(dtexcel); //fill excel data into dataTable  
-                }
-                catch (Exception ex)
-                {
-                    lblInfo.Text = "*** Sheet name Should be PO Details";
-                    Remarks += $"ReadPilotExcel - {ex}";
-                }
+                excelReader = ExcelReaderFactory.CreateBinaryReader(stream);
             }
-            return dtexcel;
-        }
-
-        public DataTable ReadLineItemExcel()
-        {
-            string conn = string.Empty;
-            DataTable dtexcel = new DataTable();
-
-            //if (fileextensin == "xlsx" || fileextensin == ".xls" || fileextensin == "xlsm")
-            //conn = @"provider=microsoft.jet.oledb.4.0;data source=" + fileName + ";extended properties='excel 8.0;hrd=yes;imex=1';"; //for below excel 2007  
-            //else
-            conn = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + txtLineItem.Text.Trim() + ";Extended Properties='Excel 12.0;HDR=NO';"; //for above excel 2007  
-            using (OleDbConnection con = new OleDbConnection(conn))
+            catch
             {
-                try
-                {
-                    OleDbDataAdapter oleAdpt = new OleDbDataAdapter("select * from [Item Report$]", con); //here we read data from sheet1  
-                    oleAdpt.Fill(dtexcel); //fill excel data into dataTable  
-                }
-                catch (Exception ex)
-                {
-                    lblInfo.Text = "***Sheet name Should be Item Report";
-                    Remarks += $"ReadLineItemExcel - {ex}";
-                }
+                excelReader = ExcelReaderFactory.CreateOpenXmlReader(stream);
             }
-            return dtexcel;
+            //excelReader.IsFirstRowAsColumnNames = true;
+            DataSet result2 = excelReader.AsDataSet();
+            excelReader.Close();
+            return result2.Tables[0];
         }
 
         private void btnLineItem_Click(object sender, EventArgs e)
@@ -318,10 +261,12 @@ namespace ShippingPilot
                 //creating lineitems
                 CoPilotProd.dsShipment.LineItemsRow drline = ds.LineItems.NewLineItemsRow();
 
+                bool _IsLineItemFound = false;
                 foreach (DataRow Row in dtLineItemData.Rows)
                 {
                     if (Row.ItemArray[0].ToString().Trim() == dr.ItemArray[16].ToString().Trim())
                     {
+                        _IsLineItemFound = true;
                         drline.Pieces = Convert.ToInt32(Row.ItemArray[1]);
                         drline.Weight = Convert.ToInt32(Row.ItemArray[5]);
                         drline.Description = Row.ItemArray[0].ToString();
@@ -345,45 +290,59 @@ namespace ShippingPilot
                         break;
                     }
                 }
-                ///save the shipment
-                CoPilotProd.PilotShipmentResult SaveResp = ws.Save(ds);
-
-                if (SaveResp.IsError == false)
+                if (_IsLineItemFound)
                 {
-                    _IsSaved = true;
-                    ProNumber = SaveResp.dsResult.Shipment[0].ProNumber.ToString();
-                    Console.WriteLine("Shipment has been saved.");
-                    Remarks += "Shipment has been saved";
+                    ///save the shipment
+                    CoPilotProd.PilotShipmentResult SaveResp = ws.Save(ds);
+
+                    if (SaveResp.IsError == false)
+                    {
+                        _IsSaved = true;
+                        ProNumber = SaveResp.dsResult.Shipment[0].ProNumber.ToString();
+                        Console.WriteLine("Shipment has been saved.");
+                        Remarks += "Shipment has been saved";
+                    }
+                    else
+                    {
+                        _IsSaved = false;
+                        Console.WriteLine("Shipment has been not saved.");
+                        Remarks += "Shipment Not saved";
+                    }
+
+                    //Add wsShipment as Web Reference pointing to service address 
+                    CoPilotProd.dsVoid ds2;
+                    //returns dsVoid with default values
+                    ds2 = ws.GetNewVoid();
+                    ds2.Void[0].LocationID = 12884574;
+                    ds2.Void[0].ControlStation = "GOP";
+                    ds2.Void[0].AddressID = 80149;
+                    ds2.Void[0].TariffHeaderID = 21942;
+                    ds2.Void[0].ProNumber = SaveResp.dsResult.Shipment[0].ProNumber.ToString();
+                    if (SaveResp.dsResult.Shipment[0].ProNumber.ToString().Trim() != string.Empty)
+                    {
+                        //void the shipment 
+                        CoPilotProd.PilotShipmentResult VoidResp = ws.Void(ds2);
+                        if (!VoidResp.IsError && VoidResp.Message == "Shipment Void Success")
+                        {
+                            Console.WriteLine("Shipment Void Success");
+                            _IsVoid = true;
+                            Remarks += $" ; {VoidResp.Message}";
+                        }
+                        else
+                        {
+                            _IsVoid = false;
+                            Console.WriteLine("Shipment void Failed !.");
+                            Remarks += $" ; {VoidResp.Message}";
+                        }
+                    }
+                    else
+                    {
+                        Remarks += "ProNumber not Generated!";
+                    }
                 }
                 else
                 {
-                    _IsSaved = false;
-                    Console.WriteLine("Shipment has been not saved.");
-                    Remarks += "Shipment Not saved";
-                }
-
-                //Add wsShipment as Web Reference pointing to service address 
-                CoPilotProd.dsVoid ds2;
-                //returns dsVoid with default values
-                ds2 = ws.GetNewVoid();
-                ds2.Void[0].LocationID = 12884574;
-                ds2.Void[0].ControlStation = "GOP";
-                ds2.Void[0].AddressID = 80149;
-                ds2.Void[0].TariffHeaderID = 21942;
-                ds2.Void[0].ProNumber = SaveResp.dsResult.Shipment[0].ProNumber.ToString();
-                //void the shipment 
-                CoPilotProd.PilotShipmentResult VoidResp = ws.Void(ds2);
-                if (!VoidResp.IsError && VoidResp.Message == "Shipment Void Success")
-                {
-                    Console.WriteLine("Shipment Void Success");
-                    _IsVoid = true;
-                    Remarks += $" ; {VoidResp.Message}";
-                }
-                else
-                {
-                    _IsVoid = false;
-                    Console.WriteLine("Shipment void Failed !.");
-                    Remarks += $" ; {VoidResp.Message}";
+                    Remarks += "Line Item not found in uploaded Excel!";
                 }
             }
             catch (Exception ex)
@@ -424,33 +383,46 @@ namespace ShippingPilot
                 DataSet ds = new DataSet("PilotResponse");
                 ds.Tables.Add(table);
 
-                //Creae an Excel application instance
-                Microsoft.Office.Interop.Excel.Application excelApp = new Microsoft.Office.Interop.Excel.Application();
-                Microsoft.Office.Interop.Excel.Workbook excelWorkBook = excelApp.Workbooks.Open(txtResponsePath.Text);
-
-                foreach (DataTable table in ds.Tables)
+                //    //Creae an Excel application instance
+                //    Microsoft.Office.Interop.Excel.Application excelApp = new Microsoft.Office.Interop.Excel.Application();
+                //    Microsoft.Office.Interop.Excel.Workbook excelWorkBook = excelApp.Workbooks.Open(txtResponsePath.Text);
+                StringBuilder sb = new StringBuilder();
+                foreach (DataRow row in ds.Tables[0].Rows)
                 {
-                    //Add a new worksheet to workbook with the Datatable name
-                    Microsoft.Office.Interop.Excel.Worksheet excelWorkSheet = excelWorkBook.Sheets.Add();
-                    excelWorkSheet.Name = $"Pilot Response_{DateTime.Now.ToString().Replace("-", "").Replace(":", "").Replace(" ", "")}";
+                    sb.AppendLine($"PO# ::  {row[0].ToString()}   ProNumber ::    {row[6].ToString()}  ");
+                    sb.AppendLine($"PrintPath:: { row[7].ToString()}");
+                    sb.AppendLine($" Remarks :: {row[5].ToString()}    Saved?  ::  {row[3].ToString()}  Voided? :: {row[4].ToString()} ");
+                    sb.AppendLine();
+                    sb.AppendLine("---------------------------------------------------------------------------------------");
+                    sb.AppendLine();
+                    //        //Add a new worksheet to workbook with the Datatable name
+                    //        Microsoft.Office.Interop.Excel.Worksheet excelWorkSheet = excelWorkBook.Sheets.Add();
+                    //        excelWorkSheet.Name = $"Pilot Response_{DateTime.Now.ToString().Replace("-", "").Replace(":", "").Replace(" ", "")}";
 
-                    for (int i = 1; i < table.Columns.Count + 1; i++)
-                    {
-                        excelWorkSheet.Cells[1, i] = table.Columns[i - 1].ColumnName;
-                    }
+                    //        for (int i = 1; i < table.Columns.Count + 1; i++)
+                    //        {
+                    //            excelWorkSheet.Cells[1, i] = table.Columns[i - 1].ColumnName;
+                    //        }
 
-                    for (int j = 0; j < table.Rows.Count; j++)
-                    {
-                        for (int k = 0; k < table.Columns.Count; k++)
-                        {
-                            excelWorkSheet.Cells[j + 2, k + 1] = table.Rows[j].ItemArray[k].ToString();
-                        }
-                    }
+                    //        for (int j = 0; j < table.Rows.Count; j++)
+                    //        {
+                    //            for (int k = 0; k < table.Columns.Count; k++)
+                    //            {
+                    //                excelWorkSheet.Cells[j + 2, k + 1] = table.Rows[j].ItemArray[k].ToString();
+                    //            }
+                    //        }
                 }
-                excelWorkBook.Save();
-                excelWorkBook.Close();
-                excelApp.Quit();
+                //    excelWorkBook.Save();
+                //    excelWorkBook.Close();
+                //    excelApp.Quit();
+                //string fileName = $"{txtResponsePath.Text}Pilot Response_{DateTime.Now.ToString().Replace("-", "").Replace(":", "").Replace(" ", "")}";
+                //TextWriter tw = File.CreateText(fileName);
+                //tw.Write(sb);
+                //tw.Close();
+                //lblRespFilePath.Text = $"Response File Path :: {fileName}";
+                txtResponse.Text = sb.ToString();
             }
+
         }
     }
 }

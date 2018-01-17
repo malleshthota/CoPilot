@@ -38,15 +38,11 @@
             this.lblUserName = new System.Windows.Forms.Label();
             this.lblDateTime = new System.Windows.Forms.Label();
             this.lblInfo = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.txtResponsePath = new System.Windows.Forms.TextBox();
-            this.btnResponse = new System.Windows.Forms.Button();
-            this.label3 = new System.Windows.Forms.Label();
             this.btnLineItem = new System.Windows.Forms.Button();
             this.txtLineItem = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
+            this.txtResponse = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -71,7 +67,7 @@
             this.btnSubmit.BackColor = System.Drawing.Color.OrangeRed;
             this.btnSubmit.Font = new System.Drawing.Font("Verdana", 9.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSubmit.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.btnSubmit.Location = new System.Drawing.Point(128, 331);
+            this.btnSubmit.Location = new System.Drawing.Point(148, 315);
             this.btnSubmit.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnSubmit.Name = "btnSubmit";
             this.btnSubmit.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
@@ -145,52 +141,11 @@
             this.lblInfo.AutoSize = true;
             this.lblInfo.Font = new System.Drawing.Font("Verdana", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblInfo.ForeColor = System.Drawing.Color.Navy;
-            this.lblInfo.Location = new System.Drawing.Point(125, 298);
+            this.lblInfo.Location = new System.Drawing.Point(114, 263);
             this.lblInfo.Name = "lblInfo";
             this.lblInfo.Size = new System.Drawing.Size(42, 18);
             this.lblInfo.TabIndex = 8;
             this.lblInfo.Text = "Info";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(-3, 231);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(98, 14);
-            this.label2.TabIndex = 9;
-            this.label2.Text = "Response File";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            // 
-            // txtResponsePath
-            // 
-            this.txtResponsePath.ForeColor = System.Drawing.Color.Blue;
-            this.txtResponsePath.Location = new System.Drawing.Point(107, 229);
-            this.txtResponsePath.Name = "txtResponsePath";
-            this.txtResponsePath.Size = new System.Drawing.Size(342, 22);
-            this.txtResponsePath.TabIndex = 10;
-            // 
-            // btnResponse
-            // 
-            this.btnResponse.BackColor = System.Drawing.Color.Orange;
-            this.btnResponse.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.btnResponse.Location = new System.Drawing.Point(457, 227);
-            this.btnResponse.Name = "btnResponse";
-            this.btnResponse.Size = new System.Drawing.Size(137, 24);
-            this.btnResponse.TabIndex = 11;
-            this.btnResponse.Text = "Browse";
-            this.btnResponse.UseVisualStyleBackColor = false;
-            this.btnResponse.Click += new System.EventHandler(this.btnResponse_Click);
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.ForeColor = System.Drawing.Color.Red;
-            this.label3.Location = new System.Drawing.Point(107, 258);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(310, 12);
-            this.label3.TabIndex = 12;
-            this.label3.Text = "*Select Response File. Ex:: C:\\PilotResponse\\abc.xlsx";
             // 
             // btnLineItem
             // 
@@ -222,43 +177,35 @@
             this.label4.Text = "Line Item Data";
             this.label4.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
-            // label5
+            // txtResponse
             // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.ForeColor = System.Drawing.Color.Red;
-            this.label5.Location = new System.Drawing.Point(107, 158);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(230, 12);
-            this.label5.TabIndex = 16;
-            this.label5.Text = "*** Sheet name Should be \"PO Details\"";
+            this.txtResponse.Location = new System.Drawing.Point(630, 41);
+            this.txtResponse.Multiline = true;
+            this.txtResponse.Name = "txtResponse";
+            this.txtResponse.Size = new System.Drawing.Size(571, 403);
+            this.txtResponse.TabIndex = 17;
             // 
-            // label6
+            // label2
             // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.ForeColor = System.Drawing.Color.Red;
-            this.label6.Location = new System.Drawing.Point(105, 206);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(240, 12);
-            this.label6.TabIndex = 17;
-            this.label6.Text = "*** Sheet name Should be \"Item Report\"";
+            this.label2.AutoSize = true;
+            this.label2.ForeColor = System.Drawing.Color.Red;
+            this.label2.Location = new System.Drawing.Point(653, 24);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(70, 14);
+            this.label2.TabIndex = 18;
+            this.label2.Text = "Response";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.LightGray;
-            this.ClientSize = new System.Drawing.Size(661, 435);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.label5);
+            this.ClientSize = new System.Drawing.Size(1226, 438);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.txtResponse);
             this.Controls.Add(this.btnLineItem);
             this.Controls.Add(this.txtLineItem);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.btnResponse);
-            this.Controls.Add(this.txtResponsePath);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.lblInfo);
             this.Controls.Add(this.lblDateTime);
             this.Controls.Add(this.lblUserName);
@@ -291,15 +238,11 @@
         private System.Windows.Forms.Label lblUserName;
         private System.Windows.Forms.Label lblDateTime;
         private System.Windows.Forms.Label lblInfo;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox txtResponsePath;
-        private System.Windows.Forms.Button btnResponse;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button btnLineItem;
         private System.Windows.Forms.TextBox txtLineItem;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox txtResponse;
+        private System.Windows.Forms.Label label2;
     }
 }
 
