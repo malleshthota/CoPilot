@@ -1,6 +1,6 @@
 ﻿namespace ShippingPilot
 {
-    partial class Form1
+    partial class COPILOT
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(COPILOT));
             this.label1 = new System.Windows.Forms.Label();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.btnSubmit = new System.Windows.Forms.Button();
@@ -51,7 +51,7 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Verdana", 9.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label1.Location = new System.Drawing.Point(-3, 136);
+            this.label1.Location = new System.Drawing.Point(16, 171);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(108, 16);
@@ -65,9 +65,9 @@
             // btnSubmit
             // 
             this.btnSubmit.BackColor = System.Drawing.Color.OrangeRed;
-            this.btnSubmit.Font = new System.Drawing.Font("Verdana", 9.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSubmit.Font = new System.Drawing.Font("Verdana", 15.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSubmit.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.btnSubmit.Location = new System.Drawing.Point(148, 315);
+            this.btnSubmit.Location = new System.Drawing.Point(145, 372);
             this.btnSubmit.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnSubmit.Name = "btnSubmit";
             this.btnSubmit.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
@@ -81,7 +81,7 @@
             // 
             this.txtFilePath.Font = new System.Drawing.Font("Verdana", 9.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtFilePath.ForeColor = System.Drawing.Color.MediumBlue;
-            this.txtFilePath.Location = new System.Drawing.Point(107, 133);
+            this.txtFilePath.Location = new System.Drawing.Point(126, 168);
             this.txtFilePath.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.txtFilePath.Name = "txtFilePath";
             this.txtFilePath.Size = new System.Drawing.Size(342, 22);
@@ -89,13 +89,13 @@
             // 
             // btnBrowse
             // 
-            this.btnBrowse.BackColor = System.Drawing.Color.Orange;
+            this.btnBrowse.BackColor = System.Drawing.Color.OrangeRed;
             this.btnBrowse.Font = new System.Drawing.Font("Verdana", 9.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnBrowse.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.btnBrowse.Location = new System.Drawing.Point(457, 133);
+            this.btnBrowse.Location = new System.Drawing.Point(476, 161);
             this.btnBrowse.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnBrowse.Name = "btnBrowse";
-            this.btnBrowse.Size = new System.Drawing.Size(137, 22);
+            this.btnBrowse.Size = new System.Drawing.Size(137, 34);
             this.btnBrowse.TabIndex = 3;
             this.btnBrowse.Text = "Browse";
             this.btnBrowse.UseVisualStyleBackColor = false;
@@ -104,7 +104,7 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = global::ShippingPilot.Properties.Resources.logo_2010_3;
-            this.pictureBox1.Location = new System.Drawing.Point(305, 12);
+            this.pictureBox1.Location = new System.Drawing.Point(433, 5);
             this.pictureBox1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(274, 68);
@@ -117,7 +117,7 @@
             this.lblUserName.AutoSize = true;
             this.lblUserName.Font = new System.Drawing.Font("Verdana", 9.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblUserName.ForeColor = System.Drawing.Color.OrangeRed;
-            this.lblUserName.Location = new System.Drawing.Point(38, 26);
+            this.lblUserName.Location = new System.Drawing.Point(44, 54);
             this.lblUserName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblUserName.Name = "lblUserName";
             this.lblUserName.Size = new System.Drawing.Size(38, 16);
@@ -128,8 +128,8 @@
             // 
             this.lblDateTime.AutoSize = true;
             this.lblDateTime.Font = new System.Drawing.Font("Verdana", 9.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDateTime.ForeColor = System.Drawing.Color.Gray;
-            this.lblDateTime.Location = new System.Drawing.Point(38, 43);
+            this.lblDateTime.ForeColor = System.Drawing.Color.DarkBlue;
+            this.lblDateTime.Location = new System.Drawing.Point(44, 81);
             this.lblDateTime.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblDateTime.Name = "lblDateTime";
             this.lblDateTime.Size = new System.Drawing.Size(28, 16);
@@ -141,7 +141,7 @@
             this.lblInfo.AutoSize = true;
             this.lblInfo.Font = new System.Drawing.Font("Verdana", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblInfo.ForeColor = System.Drawing.Color.Navy;
-            this.lblInfo.Location = new System.Drawing.Point(114, 263);
+            this.lblInfo.Location = new System.Drawing.Point(123, 305);
             this.lblInfo.Name = "lblInfo";
             this.lblInfo.Size = new System.Drawing.Size(42, 18);
             this.lblInfo.TabIndex = 8;
@@ -149,11 +149,11 @@
             // 
             // btnLineItem
             // 
-            this.btnLineItem.BackColor = System.Drawing.Color.Orange;
+            this.btnLineItem.BackColor = System.Drawing.Color.OrangeRed;
             this.btnLineItem.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.btnLineItem.Location = new System.Drawing.Point(457, 179);
+            this.btnLineItem.Location = new System.Drawing.Point(476, 225);
             this.btnLineItem.Name = "btnLineItem";
-            this.btnLineItem.Size = new System.Drawing.Size(137, 24);
+            this.btnLineItem.Size = new System.Drawing.Size(137, 33);
             this.btnLineItem.TabIndex = 15;
             this.btnLineItem.Text = "Browse";
             this.btnLineItem.UseVisualStyleBackColor = false;
@@ -162,7 +162,7 @@
             // txtLineItem
             // 
             this.txtLineItem.ForeColor = System.Drawing.Color.Blue;
-            this.txtLineItem.Location = new System.Drawing.Point(107, 181);
+            this.txtLineItem.Location = new System.Drawing.Point(126, 227);
             this.txtLineItem.Name = "txtLineItem";
             this.txtLineItem.Size = new System.Drawing.Size(342, 22);
             this.txtLineItem.TabIndex = 14;
@@ -170,7 +170,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(-3, 183);
+            this.label4.Location = new System.Drawing.Point(16, 229);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(105, 14);
             this.label4.TabIndex = 13;
@@ -179,27 +179,28 @@
             // 
             // txtResponse
             // 
-            this.txtResponse.Location = new System.Drawing.Point(630, 41);
+            this.txtResponse.Location = new System.Drawing.Point(634, 122);
             this.txtResponse.Multiline = true;
             this.txtResponse.Name = "txtResponse";
-            this.txtResponse.Size = new System.Drawing.Size(571, 403);
+            this.txtResponse.Size = new System.Drawing.Size(605, 508);
             this.txtResponse.TabIndex = 17;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Verdana", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.Red;
-            this.label2.Location = new System.Drawing.Point(653, 24);
+            this.label2.Location = new System.Drawing.Point(671, 101);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(70, 14);
+            this.label2.Size = new System.Drawing.Size(94, 18);
             this.label2.TabIndex = 18;
             this.label2.Text = "Response";
             // 
-            // Form1
+            // COPILOT
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.LightGray;
+            this.BackColor = System.Drawing.SystemColors.ButtonShadow;
             this.ClientSize = new System.Drawing.Size(1226, 438);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.txtResponse);
@@ -217,9 +218,10 @@
             this.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.Name = "Form1";
+            this.Name = "COPILOT";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "COPILOT Submissin";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);

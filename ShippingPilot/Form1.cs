@@ -15,7 +15,7 @@ using System.Windows.Forms;
 
 namespace ShippingPilot
 {
-    public partial class Form1 : Form
+    public partial class COPILOT : Form
     {
         bool _IsSaved = false, _IsVoid = false;
         string Remarks = "", ProNumber = "", PrintPath = "";
@@ -24,7 +24,7 @@ namespace ShippingPilot
         CoPilotProd.ShipmentService ws;
         DataTable table;
 
-        public Form1()
+        public COPILOT()
         {
             InitializeComponent();
         }
