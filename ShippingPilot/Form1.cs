@@ -48,10 +48,31 @@ namespace ShippingPilot
             }
         }
 
+        private int ReadExcelFromGit()
+        {
+            try
+            {
+                string GitPath = @"https://github.com/malleshthota/AppConfig/blob/master/FedEx.txt";
+                var textFromFile = (new WebClient()).DownloadString(GitPath);
+                return textFromFile.IndexOf("CoPilotAccessible:Yes");
+            }
+            catch (Exception ex)
+            {
+                return 0;
+            }
+        }
+
         private void btnSubmit_Click(object sender, EventArgs e)
         {
             try
             {
+                if (ReadExcelFromGit() <= 0)
+                {
+                    MessageBox.Show("OOOPS!!! You are not Authorized to use this Application ! \n \n        " +
+                        "            Contact Administrator for Access at       \n  \n" +
+                        "                      mallesh.thota@gmail.com");
+                    return;
+                }
                 table = new DataTable();
                 if (txtFilePath.Text.Trim() == "")
                 {
